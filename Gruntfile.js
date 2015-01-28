@@ -69,7 +69,7 @@ module.exports = function (grunt) {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
-        livereload: 35729
+        livereload: 8080
       },
       livereload: {
         options: {
@@ -185,12 +185,15 @@ module.exports = function (grunt) {
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/styles/fonts',
-        relativeAssets: false,
+        relativeAssets: true,
         assetCacheBuster: false,
         raw: 'Sass::Script::Number.precision = 10\n'
       },
       dist: {
         options: {
+          outputStyle: 'compressed',
+          debugInfo: false,
+          noLineComments: true,
           generatedImagesDir: '<%= yeoman.dist %>/images/generated'
         }
       },
@@ -212,7 +215,35 @@ module.exports = function (grunt) {
         ]
       }
     },
-
+    // coffee: {
+    //     server: {
+    //         options: {
+    //             sourceMap: true,
+    //             //join: true,
+    //             sourceRoot: ''
+    //         },
+    //         files: [{
+    //             expand: true,
+    //             cwd: '<%= yeoman.app %>/scripts/coffee',
+    //             src: '**/*.coffee',
+    //             dest: '.tmp/scripts/app',
+    //             ext: '.js'
+    //         }]
+    //     },            
+    //     dist: {
+    //         options: {
+    //             sourceMap: false,
+    //             sourceRoot: ''              
+    //         },
+    //         files: [{
+    //             expand: true,
+    //             cwd: '<%= yeoman.app %>/scripts/coffee',
+    //             src: '**/*.coffee',
+    //             dest: '.tmp/scripts/app',
+    //             ext: '.js'              
+    //         }]
+    //     }
+    // },
     // Reads HTML for usemin blocks to enable smart builds that automatically
     // concat, minify and revision files. Creates configurations in memory so
     // additional tasks can operate on them
@@ -245,28 +276,30 @@ module.exports = function (grunt) {
     // By default, your `index.html`'s <!-- Usemin block --> will take care of
     // minification. These next options are pre-configured if you do not wish
     // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
-
+    cssmin: {
+      dist: {
+        files: {
+          '<%= yeoman.dist %>/styles/main.css': [
+            '.tmp/styles/{,*/}*.css'
+          ]
+        }
+      }
+    },
+    uglify: {
+      options: {
+          mangle: false
+      },
+      dist: {
+        files: {
+          '<%= yeoman.dist %>/scripts/scripts.js': [
+            '<%= yeoman.dist %>/scripts/scripts.js'
+          ]
+        }
+      }
+    },
+    concat: {
+       dist: {}
+    },
     imagemin: {
       dist: {
         files: [{
@@ -337,11 +370,11 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             '*.{ico,png,txt}',
-            '.htaccess',
+            '.htaccess', 
             '*.html',
             'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'fonts/{,*/}*.*'
+            'images/{,*/}*.{webp}'
+            // 'fonts/{,*/}*.*'
           ]
         }, {
           expand: true,
@@ -353,6 +386,26 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          flatten: true,
+          cwd: 'bower_components/',
+          dest: '<%= yeoman.dist %>/fonts',
+          src: [
+                'bootstrap/fonts/*',
+                'font-awesome/fonts/*',
+                'weather-icons/font/*'
+              ] 
+        }, {
+          expand: true,
+          flatten: true,
+          cwd: 'bower_components/',
+          dest: '<%= yeoman.app %>/fonts',
+          src: [
+                'bootstrap/fonts/*',
+                'font-awesome/fonts/*',
+                'weather-icons/font/*'
+              ]          
         }]
       },
       styles: {
@@ -366,12 +419,14 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
+        // 'coffee:server',        
         'compass:server'
       ],
       test: [
-        'compass'
+        'compass',
       ],
       dist: [
+        // 'coffee:dist',
         'compass:dist',
         'imagemin',
         'svgmin'
@@ -412,8 +467,7 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'connect:test',
-    'karma'
+    'connect:test'
   ]);
 
   grunt.registerTask('build', [
