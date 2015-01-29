@@ -1,16 +1,20 @@
 <div class="page-signin">
 
-    <div class="signin-header">
+<!--     <div class="signin-header">
         <div class="container text-center">
             <section class="logo">
                 <a href="#/">{{main.brand}}</a>
             </section>
         </div>
-    </div>
+    </div> -->
 
     <div class="signin-body">
         <div class="container">
             <div class="form-container">
+                
+                <section class="row">
+                    <alert id="flash" data-ng-show="flash" type="alert.type" close="closeAlert()" >{{ flash }}</alert>
+                </section>
 
                 <section class="row signin-social text-center">
                     <a href="javascript:;" class="btn-icon btn-icon-sm bg-twitter"><i class="fa fa-twitter"></i></a>
@@ -22,34 +26,38 @@
 
                 <span class="line-thru">OR</span>
 
-                <form class="form-horizontal">
+                <form class="form-horizontal" data-ng-submit="login()">
                     <fieldset>
                         <div class="form-group">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-envelope"></span>
+                                    <i class="fa fa-user"></i>
                                 </span>
-                                <input type="email"
+                                <input type="text"
+                                       name="username"
                                        class="form-control"
-                                       placeholder="Email"
-                                       >
+                                       placeholder="Username"
+                                       data-ng-model="credentials.username"
+                                       />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-lock"></span>
+                                    <i class="fa fa-lock"></i>
                                 </span>
                                 <input type="password"
+                                       name="password"
                                        class="form-control"
-                                       placeholder="password"
-                                       >
+                                       placeholder="Password"
+                                       data-ng-model="credentials.password"
+                                       />
                             </div>
                         </div>
                         <div class="form-group">
                         </div>
                         <div class="form-group">
-                            <a href="#/" class="btn btn-primary btn-lg btn-block">Log in</a>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
                         </div>
                     </fieldset>
                 </form>

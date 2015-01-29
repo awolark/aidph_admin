@@ -1,7 +1,6 @@
 .page-signin,
 .page-signup {
 
-    // 
     .signin-header {
         padding: 25px 0;
         background-color: #dfe0e6;
@@ -17,16 +16,22 @@
         }
     }
 
-    // 
     .signin-body,
     .signup-body {
-        border-top: 1px solid lighten($body-bg, 2%);
-        padding: 20px 10px;
+        //border-top: 1px solid lighten($body-bg, 2%);
+        //padding: 20px 10px;
+
+        @extend .center
     }
 
     .form-container {
+        display: inline-block;
         max-width: 420px;
-        margin: 10px auto;
+        max-height: 290px;
+        margin: 0 auto;
+
+        @extend .glass-effect;
+        @extend .rounded-corners;
     }
 
     // Line through

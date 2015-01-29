@@ -12,7 +12,7 @@
     }
   ]).directive('customBackground', function() {
     return {
-      restrict: "A",
+      restrict: 'A',
       controller: [
         '$scope', '$element', '$location', function($scope, $element, $location) {
           var addBg, path;
@@ -24,11 +24,11 @@
             switch (path) {
               case '/':
                 return $element.addClass('body-home');
-              case '/404':
-              case '/pages/500':
-              case '/pages/signin':
-              case '/pages/signup':
-              case '/pages/forgot':
+              //case '/404':
+              //case '/pages/500':
+              //case '/pages/signup':
+              //case '/pages/forgot':
+              case '/login':
                 return $element.addClass('body-special');
               case '/pages/lock-screen':
                 return $element.addClass('body-special body-lock');
@@ -141,7 +141,7 @@
   ]).directive('highlightActive', [
     function() {
       return {
-        restrict: "A",
+        restrict: 'A',
         controller: [
           '$scope', '$element', '$attrs', '$location', function($scope, $element, $attrs, $location) {
             var highlightActive, links, path;
@@ -200,7 +200,7 @@
   ]).directive('goBack', [
     function() {
       return {
-        restrict: "A",
+        restrict: 'A',
         controller: [
           '$scope', '$element', '$window', function($scope, $element, $window) {
             return $element.on('click', function() {

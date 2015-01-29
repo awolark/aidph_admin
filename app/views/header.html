@@ -1,4 +1,4 @@
-<header class="clearfix">
+<header class="clearfix" data-ng-controller="SessionsCtrl">
 
     <!-- Logo -->
     <div class="logo">
@@ -59,7 +59,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#/pages/signin">
+                        <a data-ng-click="logout()">
                             <i class="fa fa-sign-out"></i>
                             <span data-i18n="Log Out"></span>
                         </a>

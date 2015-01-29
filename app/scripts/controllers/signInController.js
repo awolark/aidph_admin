@@ -11,9 +11,7 @@
  */
 angular.module('aidphApp')
   .controller('LoginController', function ($scope) {
-    $scope.main = {
-    	brand: 'Aidph'
-    };
+
   });
 
 }).call(this);

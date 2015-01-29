@@ -32,31 +32,32 @@
           msg: 'Oh snap! Change a few things up and try submitting again.'
         }
       ];
-      $scope.addAlert = function() {
-        var num, type;
-        num = Math.ceil(Math.random() * 4);
-        type = void 0;
-        switch (num) {
-          case 0:
-            type = 'info';
-            break;
-          case 1:
-            type = 'success';
-            break;
-          case 2:
-            type = 'info';
-            break;
-          case 3:
-            type = 'warning';
-            break;
-          case 4:
-            type = 'danger';
-        }
-        return $scope.alerts.push({
-          type: type,
-          msg: "Another alert!"
-        });
-      };
+      
+      // $scope.addAlert = function() {
+      //   var num, type;
+      //   num = Math.ceil(Math.random() * 4);
+      //   type = void 0;
+      //   switch (num) {
+      //     case 0:
+      //       type = 'info';
+      //       break;
+      //     case 1:
+      //       type = 'success';
+      //       break;
+      //     case 2:
+      //       type = 'info';
+      //       break;
+      //     case 3:
+      //       type = 'warning';
+      //       break;
+      //     case 4:
+      //       type = 'danger';
+      //   }
+      //   return $scope.alerts.push({
+      //     type: type,
+      //     msg: "Another alert!"
+      //   });
+      // };
       return $scope.closeAlert = function(index) {
         return $scope.alerts.splice(index, 1);
       };

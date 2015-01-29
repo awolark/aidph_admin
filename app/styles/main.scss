@@ -6,8 +6,11 @@
 
 @import "compass/css3";
 @import
+	// special effects css - wayne 1-30-2015 
+    "effects/effects"
+
     // UI, uses Bootstrap's variables
-    "ui/ui"
+,   "ui/ui"
 
     // Plugins, overrides plugins' style
 ,   "plugins/bootstrap-slider"

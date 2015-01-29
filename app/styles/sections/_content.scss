@@ -1,3 +1,11 @@
+.center {                   //centering things
+    left:25%;
+    width:50%;
+    height:50%;
+    top:25%;
+    position:absolute;
+    text-align:center;  
+}
 
 .view-containter {
     position: relative;
@@ -27,7 +35,9 @@
 // for special page, like 404, sign in, sign up
 .body-special {
     #content {
-        z-index: 2;
+        background: url('../images/background/signin_bg.jpg') no-repeat center center fixed;
+        background-size: cover
+;        z-index: 2;
         top: 0;
         left: 0;
     }
