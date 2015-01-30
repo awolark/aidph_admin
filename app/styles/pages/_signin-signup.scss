@@ -1,3 +1,5 @@
+
+
 .page-signin,
 .page-signup {
 
@@ -18,35 +20,79 @@
 
     .signin-body,
     .signup-body {
-        //border-top: 1px solid lighten($body-bg, 2%);
-        //padding: 20px 10px;
-
-        @extend .center
+        @extend .center;
     }
 
     .form-container {
+
         display: inline-block;
-        max-width: 420px;
-        max-height: 290px;
+        max-width: 450px;
+        max-height: 340px;
+        padding: 20px 30px;
+        padding-bottom:10px;
+
         margin: 0 auto;
 
         @extend .glass-effect;
         @extend .rounded-corners;
+
+        .logo-container {
+
+            position:absolute;
+            left:0;
+            top:-80px;
+            margin:0 auto;
+            text-align:center;
+            z-index:3;
+            width:100%;
+
+            img {
+                max-width:100%;
+                max-height:120px;
+            }
+
+        }
+
+        .alert {
+            margin-top: 5px;
+            margin-bottom: -5px; 
+        }
+
+        .forgot-password {
+            a {
+                color: #858585;    
+
+                &:hover {
+                    text-decoration: none;
+                }        
+            }
+        }
     }
+
+    form {
+        input {    
+            @extend .glass-effect-input;
+        }
+        span.input-group-addon {
+            @extend .glass-effect-input;
+        }
+        button {
+            border: 0;
+        }
+    }
+
+
 
     // Line through
     .line-thru {
-        margin: 1em 0;
+        padding-bottom: 5px;
         display: block;
-        font-size: .875em;
-        font-weight: bold;
-        margin-bottom: 1em;
         position: relative;
         text-align: center;
         width: 100%;
         z-index: 1;
         &:before {
-            width: 50px;
+            width: 0px;
             height: 10px;
             background-color: $body-bg; 
             content: '';

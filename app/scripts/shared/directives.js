@@ -30,7 +30,7 @@
               //case '/pages/forgot':
               case '/login':
                 return $element.addClass('body-special');
-              case '/pages/lock-screen':
+              case '/lock':
                 return $element.addClass('body-special body-lock');
               case '/tasks':
                 return $element.addClass('body-tasks');
