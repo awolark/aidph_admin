@@ -3,22 +3,23 @@
 'use strict';  
 
 angular.module('aidphApp')
-  .controller('SessionsCtrl', function($scope, $location, AuthenticationService, $modal, $rootScope, SERVER) {
+  .controller('SessionsCtrl', function($scope, $rootScope, $location, AuthenticationService, $modal, SERVER) {
 
-       var userData = AuthenticationService.loggedUser();
+       $scope.credentials = { username: '', password: '' };
+     
        if(AuthenticationService.isLoggedIn()) {
+         var userData = AuthenticationService.loggedUser();
+      
          $rootScope.username = userData.username; 
-         $rootScope.image = SERVER + userData.image_path;       
+      
+         $rootScope.image = SERVER + userData.image_path; 
        }
 
-        $scope.credentials = { username: '', password: '' };
 
         $scope.login = function() {
         	AuthenticationService.login($scope.credentials)
             .success(function(response) {
               $rootScope.user = response;
-
-
 
               $location.path('/');
               

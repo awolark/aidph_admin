@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
@@ -76,8 +77,8 @@
     <!-- build:js(.) scripts/vendor.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jqueryui/jquery-ui.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
@@ -88,51 +89,49 @@
    <!-- endbuild -->
 
     <!-- build:js(.) scripts/ui.js -->
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/jquery-spinner/dist/jquery.spinner.min.js"></script>
     <script src="bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
     <script src="bower_components/jquery-steps/build/jquery.steps.min.js"></script>
     <script src="bower_components/toastr/toastr.min.js"></script>
     <script src="bower_components/bootstrap-file-input/bootstrap.file-input.js"></script>
+    <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
     <script src="bower_components/jquery.slimscroll/jquery.slimscroll.min.js"></script>
     <script src="bower_components/holderjs/holder.js"></script>
     <script src="scripts/vendors/responsive-tables.js"></script>
-    <script src="bower_components/gauge.js/dist/gauge.min.js"></script>
     <script src="bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
-    <!--<script src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>-->
-    <!--<script src="bower_components/textAngular/dist/textAngular.min.js"></script>-->
     <script src="scripts/vendors/skycons.js"></script>
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
     <script src="bower_components/jquery.easing/js/jquery.easing.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/lodash/dist/lodash.compat.js"></script>
     <script src="bower_components/angularjs-google-maps/dist/angular-google-maps.js"></script>
-    <script src="bower_components/jqvmap/jqvmap/jquery.vmap.min.js"></script>
+    <!--<script src="bower_components/jqvmap/jqvmap/jquery.vmap.min.js"></script>-->
     <!-- endbuild -->
    
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/config.js"></script>
+        <!-- main angular config -->
         <script src="scripts/app.js"></script>
+
+        <!-- controllers -->
+        <script src="scripts/controllers/appCtrl.js"></script> 
         <script src="scripts/controllers/sessionsCtrl.js"></script>
-        <script src="scripts/controllers/mainCtrl.js"></script>
+        <script src="scripts/controllers/areasCtrl.js"></script>
+        <script src="scripts/controllers/navCtrl.js"></script> 
+        <script src="scripts/controllers/dashboardCtrl.js"></script> 
+        <script src="scripts/controllers/uiCtrl.js"></script> 
+        <script src="scripts/controllers/tableCtrl.js"></script>
 
-        <script src="scripts/shared/main.js"></script>
-        <script src="scripts/shared/directives.js"></script>
+        <!-- services -->
+        <script src="scripts/services/services.js"></script>
+        <script src="scripts/services/UIService.js"></script>  
 
-        <script src="scripts/shared/localize.js"></script>
-        <script src="scripts/UI/UICtrl.js"></script>
-        <script src="scripts/UI/UIDirective.js"></script>
-        <script src="scripts/UI/UIService.js"></script>
-        <!--<script src="scripts/Form/FormDirective.js"></script>-->
-        <!--<script src="scripts/Form/FormCtrl.js"></script>-->
-        <!--<script src="scripts/Form/FormValidation.js"></script>-->
-        <!--<script src="scripts/Table/TableCtrl.js"></script>-->
-        <!--<script src="scripts/Map/Map.js"></script>-->
+        <!-- directives -->
+        <script src="scripts/directives/directives.js"></script>
+        <script src="scripts/directives/UIDirective.js"></script>
         <script src="scripts/Task/Task.js"></script>
-        <!--<script src="scripts/Chart/ChartCtrl.js"></script>-->
-        <!--<script src="scripts/Chart/ChartDirective.js"></script>-->
-        <script src="scripts/Page/PageCtrl.js"></script>
+
         <!-- endbuild -->
 </body>
 </html>

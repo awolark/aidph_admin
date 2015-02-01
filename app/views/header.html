@@ -25,8 +25,8 @@
         </ul> 
 
         <ul class="nav-right pull-right list-unstyled">   
-            <li class="dropdown">
-                <a href="javascript:;" class="dropdown-toggle bg-success" data-toggle="dropdown">
+            <li class="dropdown" dropdown>
+                <a href="javascript:;" class="dropdown-toggle bg-success" dropdown-toggle>
                     <i class="fa fa-bell-o nav-icon"></i>
                     <span class="badge badge-info">3</span>
                 </a>
@@ -74,11 +74,11 @@
                     </div>
                 </div>
             </li>
-            <li class="dropdown text-normal nav-profile">
-                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" style="min-width:160px;">
-                    <img src="{{ image ? image : 'images/icon-user-default.png' }}" alt="" class="img-circle img30_30">
+            <li class="dropdown text-normal nav-profile" dropdown >
+                <a href="javascript:;" class="dropdown-toggle" dropdown-toggle style="min-width:160px;">
+                    <img src="{{ image === undefined ? 'images/icon-user-default.png' : image }}" alt="" class="img-circle img30_30">
                     <span class="hidden-xs">
-                        <span data-i18n="{{ username ? username : 'default' }}"></span>
+                        <span data-i18n="{{ username === undefined ? '' : username }}"></span>
                     </span>
                 </a>
                 <ul class="dropdown-menu dropdown-dark with-arrow">
