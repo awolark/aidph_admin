@@ -76,34 +76,28 @@
             </li>
             <li class="dropdown text-normal nav-profile" dropdown >
                 <a href="javascript:;" class="dropdown-toggle" dropdown-toggle style="min-width:160px;">
-                    <img src="{{ image === undefined ? 'images/icon-user-default.png' : image }}" alt="" class="img-circle img30_30">
+                    <img data-ng-src="{{ image === undefined ? 'images/icon-user-default.png' : image }}" alt="" class="img-circle img30_30">
                     <span class="hidden-xs">
-                        <span data-i18n="{{ username === undefined ? '' : username }}"></span>
+                        <span> {{ username === undefined ? '' : username }} </span>
                     </span>
                 </a>
                 <ul class="dropdown-menu dropdown-dark with-arrow">
                     <li>
                         <a href="#/pages/profile">
                             <i class="fa fa-user"></i>
-                            <span data-i18n="My Profile"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/tasks">
-                            <i class="fa fa-check"></i>
-                            <span data-i18n="My Tasks"></span>
+                            <span>My Profile</span>
                         </a>
                     </li>
                     <li>
                         <a href="#/lock" data-ng-click="lock()">
                             <i class="fa fa-lock"></i>
-                            <span data-i18n="Lock"></span>
+                            <span>Lock</span>
                         </a>
                     </li>
                     <li>
                         <a data-ng-click="logout()">
                             <i class="fa fa-sign-out"></i>
-                            <span data-i18n="Log Out"></span>
+                            <span>Log Out</span>
                         </a>
                     </li>
                 </ul>

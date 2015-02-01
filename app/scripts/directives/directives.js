@@ -29,8 +29,6 @@
                 return $element.addClass('body-home');
               //case '/404':
               //case '/pages/500':
-              //case '/pages/signup':
-              //case '/pages/forgot':
               case '/login':
                 return $element.addClass('body-special');
               case '/lock':
