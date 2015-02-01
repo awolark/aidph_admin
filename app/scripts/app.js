@@ -68,7 +68,7 @@ angular
         controller: 'SessionsCtrl'        
       })
       .when('/areas', {
-        templateUrl: 'views/tables/areas.html',
+        templateUrl: 'views/pages/areas.html',
         controller: 'AreasCtrl',
         resolve: {
           areaResponse : function(AreaService) {
@@ -77,7 +77,8 @@ angular
         }
       })
       .when('/infrastructures', {
-        templateUrl: 'views/tables/infras.html'
+        templateUrl: 'views/pages/infras.html',
+        controller: 'InfrasCtrl'
       })
       .otherwise({
         redirectTo: '/'

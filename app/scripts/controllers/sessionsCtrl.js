@@ -19,7 +19,11 @@ angular.module('aidphApp')
         $scope.login = function() {
         	AuthenticationService.login($scope.credentials)
             .success(function(response) {
-              $rootScope.user = response;
+
+              var userData = response.data;
+
+              $rootScope.username = userData.username;
+              $rootScope.image = SERVER + userData.image_path; 
 
               $location.path('/');
               

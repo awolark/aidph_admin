@@ -8,6 +8,10 @@ angular.module('aidphApp')
 	  var init;
     $scope.areas = {};
 
+    // var entries = AreaService.query(function() {
+    //   console.log("Query: "+entries);
+    // });
+
 	  $scope.areas = areaResponse.data.data;
 	  $scope.pageDetail = areaResponse.data.meta;
 
