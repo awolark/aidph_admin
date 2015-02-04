@@ -47,10 +47,6 @@ var aidphApp = angular.module('aidphApp');
               $scope.cancel = function() {
                 $modalInstance.dismiss('cancel');
               };
-               $scope.submitForm = function() {
-                console.log('submit the form');
-               };
-
             }
       };
       var modalOptions = {};
@@ -78,7 +74,6 @@ var aidphApp = angular.module('aidphApp');
         },
         resolve: {
           area: function() {
-            console.log(selectedArea);
             return selectedArea;
           }
         }
@@ -148,14 +143,11 @@ aidphApp.controller('AreasUpdateController', ['$scope', 'Area',
     var self = this;
 
     self.update =  function(updatedArea) {
-      var area = updatedArea;
-      console.log('updating area');
-      console.log(area);
+      // var area = updatedArea;
+ 
+      Area.update({id: updatedArea.id}, updatedArea);
+  
 
-      // Area.$update(function() {
-      // }, function() {
-      //   self.flash.error = errorResponse.data.message;
-      // });
     };
 
     self.alert = {

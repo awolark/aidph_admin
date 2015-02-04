@@ -85,8 +85,8 @@
     <tbody>
       <tr dir-paginate="area in areasCtrl.areas | filter: q | itemsPerPage: areasCtrl.numPerPage"
       total-items="areasCtrl.totalData" current-page="areasCtrl.currentPage">
-        <td>{{area.area_name}}</td>
-        <td>{{area.area_type}}</td>
+        <td>{{area.name}}</td>
+        <td>{{area.type}}</td>
         <td>{{area.contact_person}}</td>
         <td>{{area.contact_no}}</td>
         <td>

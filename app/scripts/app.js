@@ -66,13 +66,13 @@ angular
       .state('loginState', {
         url: '/login',
         templateUrl: 'views/pages/signin.html',
-        controller: 'SessionsCtrl'
+        controller: 'SessionsController'
       })
       // Lock
       .state('lockState', {
         url: '/lock',
         templateUrl: 'views/pages/lock-screen.html',
-        controller: 'SessionsCtrl'        
+        controller: 'SessionsController'        
       })
       // Areas
       .state('areasState', {
@@ -96,7 +96,7 @@ angular
       templateUrl: 'views/areas/view-areas.html'
     })       
     .state('updateAreaState', {
-      url: '/areas/:id/edit',
+      url: '/areas/:id',
       templateUrl: 'views/areas/edit-areas.html'
     })       
     // Infrastructures
