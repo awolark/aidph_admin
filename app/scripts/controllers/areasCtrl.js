@@ -44,6 +44,9 @@ var aidphApp = angular.module('aidphApp');
       var modalDefaults = {
             templateUrl: 'views/areas/add-areas.html',
             controller: function($scope, $modalInstance) {
+              $scope.ok = function() {
+                $modalInstance.close();
+              };
               $scope.cancel = function() {
                 $modalInstance.dismiss('cancel');
               };
@@ -53,18 +56,20 @@ var aidphApp = angular.module('aidphApp');
       modalService.showModal(modalDefaults, modalOptions);
   };
 
+  self.remove = function(selectedId) {
+    Area.delete({id: selectedId});
+  };
+
   self.modalUpdate = function(selectedArea) {
       var modalDefaults = {
         templateUrl: 'views/areas/update-areas.html',
         controller: function($scope, $modalInstance, area) {
           $scope.area = area;
 
-          // $scope.submitForm = function() {
-          //  console.log('submit the form');
-          // };
-
           $scope.ok = function() {
-            $modalInstance.close($scope.area);
+            if(updateAreaForm.$valid) {
+              $modalInstance.close($scope.area);              
+            }
           };
 
           $scope.cancel = function() {
@@ -105,49 +110,49 @@ var aidphApp = angular.module('aidphApp');
 
 aidphApp.controller('AreasCreateController', ['$scope', 'Area', 'modalService', '$location', 
   function ($scope,  Area, modalService, $location) {
-    
-    $scope.create = function() {
+    var self = this;
+    self.areaTypes = ['NATIONAL', 'REGION','PROVINCE', 'CITY', 'BRGY'];
+    self.flash = '';
+
+    self.create = function() {
       // Create new Area
       var area = new Area({
-        parent_id: this.parent_id,
         name: this.name,
-        type: this.name,
-        contact_person: this.name,
-        contact_no: this.name,
-        latlng: this.name,
-        bounds: this.name,
+        type: this.type,
+        contact_person: this.contact_person,
+        contact_no: this.contact_no,
         status: this.status
+        // latlng: this.name,
+        // bounds: this.name,
+        // parent_id: self.parent_id,
       });
-
-      Area.$save(function(response) {
-        $location.path('areas/' + response.id);
-
-        $scope.parent_id = '';
-        $scope.name = '';
-        $scope.type = '';
-        $scope.contact_person = '';
-        $scope.contact_no = '';
-        $scope.latlng = '';
-        $scope.bounds = '';
-        $scope.status = '';
+      area = Area.save(area).$promise.then(function(response){
+          $location.path('/areas');
+          $rootScope.flash = response.message;
       }, function(errorResponse) {
-        $scope.error = errorResponse.data.message;
+          errorResponse.error.message = self.flash; 
       });
    };
 
+
+    self.alert = {
+      type: 'danger'
+    };
+
+
+
+
   }]);
 
-aidphApp.controller('AreasUpdateController', ['$scope', 'Area', 
+aidphApp.controller('AreasUpdateController', ['$scope', 'Area',  
   function ($scope, Area) {
 
     var self = this;
 
-    self.update =  function(updatedArea) {
-      // var area = updatedArea;
- 
-      Area.update({id: updatedArea.id}, updatedArea);
-  
+    self.areaTypes = ['NATIONAL', 'REGION','PROVINCE', 'CITY', 'BRGY'];
 
+    self.update =  function(updatedArea) { 
+      Area.update({id: updatedArea.id}, updatedArea);
     };
 
     self.alert = {
@@ -158,8 +163,14 @@ aidphApp.controller('AreasUpdateController', ['$scope', 'Area',
       self.flash.error = '';
     };
 
+    self.canSubmit = function() {
+      return self.updateAreaForm.$valid;
+    };
+
 }]);
 
+
+ 
 
 
 }).call();

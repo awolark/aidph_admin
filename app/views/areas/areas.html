@@ -14,7 +14,9 @@
   <section class="panel panel-default table-dynamic">
     <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Manage Areas </strong></div>
 
-    <!-- <div class="row"> -->
+        <section class="row">
+            <alert id="flash" data-ng-show="flash" type="{{areasCtrl.alert.type}}" close="closeAlert()" >{{ flash }}</alert>
+        </section>
 
     <div class="table-filters">
       <div class="row">
@@ -36,88 +38,27 @@
    </div>
 
 
-   <!-- </div>  -->
+<area-list></area-list>
 
-   <table class="table table-bordered table-striped table-responsive">
-    <thead>
-      <tr>
-        <th width="10%"><div class="th">
-          Area
-          <span class="glyphicon glyphicon-chevron-up"
-          data-ng-click="order('area_name') "
-          data-ng-class="{active: row == 'area_name'}"></span>
-          <span class="glyphicon glyphicon-chevron-down"
-          data-ng-click="order('-area_name') "
-          data-ng-class="{active: row == '-area_name'}"></span>
-        </div></th>
-        <th width="10%"><div class="th">
-          Type
-          <span class="glyphicon glyphicon-chevron-up"
-          data-ng-click="order('area_type') "
-          data-ng-class="{active: row == 'area_type'}"></span>
-          <span class="glyphicon glyphicon-chevron-down"
-          data-ng-click="order('-area_type') "
-          data-ng-class="{active: row == '-area_type'}"></span>
-        </div></th>
-        <th width="10%"><div class="th">
-          Contact Person
-          <span class="glyphicon glyphicon-chevron-up"
-          data-ng-click="order('contact_person') "
-          data-ng-class="{active: row == 'contact_person'}"></span>
-          <span class="glyphicon glyphicon-chevron-down"
-          data-ng-click="order('-contact_person') "
-          data-ng-class="{active: row == '-contact_person'}"></span>
-        </div></th>
-        <th width="10%"><div class="th">
-          Contact No.
-          <span class="glyphicon glyphicon-chevron-up"
-          data-ng-click="order('contact_no') "
-          data-ng-class="{active: row == 'contact_no'}"></span>
-          <span class="glyphicon glyphicon-chevron-down"
-          data-ng-click="order('-contact_no') "
-          data-ng-class="{active: row == '-contact_no'}"></span>
-        </div></th>
-        <th width="10%"><div class="th">
-          Action
-        </div></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr dir-paginate="area in areasCtrl.areas | filter: q | itemsPerPage: areasCtrl.numPerPage"
-      total-items="areasCtrl.totalData" current-page="areasCtrl.currentPage">
-        <td>{{area.name}}</td>
-        <td>{{area.type}}</td>
-        <td>{{area.contact_person}}</td>
-        <td>{{area.contact_no}}</td>
-        <td>
-           <a href="javascript:;" class="btn-icon btn-icon-sm bg-success"><i class="fa fa-map-marker" tooltip-placement="top" tooltip="View on Map" tooltip-append-to-body="true"></i></a>
-
-           <a data-ng-click="areasCtrl.modalUpdate(area)" href="javascript:;" class="btn-icon btn-icon-sm bg-info"><i class="fa fa-pencil-square-o" tooltip-placement="top" tooltip="Update" tooltip-append-to-body="true"></i></a>
-           
-           <a href="javascript:;" class="btn-icon btn-icon-sm bg-danger"><i class="fa fa-trash" tooltip-placement="top" tooltip="Delete" tooltip-append-to-body="true"></i></a>
-        </td>
-      </tr> 
- </tbody>
-</table>
 
 <footer class="table-footer">
   <div class="row">
-    <div class="col-md-6 page-num-info">
-      <span>
-        Show 
-        <select data-ng-model="areasCtrl.numPerPage"
-        data-ng-options="num for num in areasCtrl.numPerPageOpt">
-      </select> 
-      Entries per page
-    </span>
-  </div>
-  <div class="col-md-6 text-right pagination-container">
+      <div class="col-md-6 page-num-info">
+        <span>
+          Show 
+          <select data-ng-model="areasCtrl.numPerPage"
+          data-ng-options="num for num in areasCtrl.numPerPageOpt">
+        </select> 
+        Entries per page
+      </span>
+    </div>
 
-    <dir-pagination-controls boundary-links="true" max-size="6" on-page-change="areasCtrl.pageChanged(newPageNumber)"></dir-pagination-controls>
-
+    <div class="col-md-6 text-right pagination-container">
+      <dir-pagination-controls boundary-links="true" max-size="6" on-page-change="areasCtrl.pageChanged(newPageNumber)"></dir-pagination-controls>
+    </div> 
   </div>
-</div>
 </footer>
+
 </section>
 
 </div>

@@ -25,7 +25,8 @@ angular
     'app.ui.directives',
     'app.ui.services',
     'app.directives',
-    'app.task'
+    'app.task',
+    'app.custom.filters'
   ])
 
    .constant('APP_NAME', '#aidPH')
@@ -87,18 +88,18 @@ angular
           }
         }
       })
-    .state('createAreaState', {
-      url: '/areas/new',
-      templateUrl: 'views/areas/add-areas.html'
-    })        
-    .state('viewAreaState', {
-      url: '/areas/:id',
-      templateUrl: 'views/areas/view-areas.html'
-    })       
-    .state('updateAreaState', {
-      url: '/areas/:id',
-      templateUrl: 'views/areas/edit-areas.html'
-    })       
+    // .state('createAreaState', {
+    //   url: '/areas/new',
+    //   templateUrl: 'views/areas/add-areas.html'
+    // })        
+    // .state('viewAreaState', {
+    //   url: '/areas/:id',
+    //   templateUrl: 'views/areas/view-areas.html'
+    // })       
+    // .state('updateAreaState', {
+    //   url: '/areas/:id',
+    //   templateUrl: 'views/areas/edit-areas.html'
+    // })       
     // Infrastructures
     .state('infrasState', {
       url: '/infrastructures',

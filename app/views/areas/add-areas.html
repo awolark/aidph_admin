@@ -1,14 +1,13 @@
-<section data-ng-controller="AreasUpdateController as areasUpdateCtrl">
+<section data-ng-controller="AreasCreateController as areasCreateCtrl">
 
   <div class="modal-header">
-    <h3 class="modal-title">Update Area</h3>
+    <h3 class="modal-title">Create Area</h3>
   </div>
   
-
     <div class="modal-body">
 
-      <form name="form_signup" class="form-horizontal form-validation" data-ng-submit="areasUpdateCtrl.update()">
-        
+       <form name="createAreaForm" class="form-horizontal form-validation" novalidate>
+
         <fieldset>
 
           <div class="form-group">
@@ -19,8 +18,8 @@
               <input  type="text"
               id="area"
               class="form-control"
-              placeholder="Min length 2, Max length 30"
-              data-ng-model="area.area_name"
+              placeholder="Area Name"
+              data-ng-model="areasCreateCtrl.name"
               required
               data-ng-minlength="3"
               data-ng-maxlength="100">
@@ -28,14 +27,14 @@
           </div>
           <div class="form-group">
             <div class="col-sm-3">
-              <label for="area_type">Type</label>
+              <label for="type">Type</label>
             </div>
             <div class="col-sm-9">
               <span class="ui-select">
-                <select id="parent_area">
-                  <option>Mustard</option>
-                  <option>Ketchup</option>
-                  <option>Barbecue</option>
+                <select 
+                ng-model="areasCreateCtrl.type"
+                ng-init="areasCreateCtrl.areaTypes[0]"
+                ng-options="type for type in areasCreateCtrl.areaTypes">
                 </select>
               </span>
             </div>
@@ -49,7 +48,7 @@
               id="contact_person"
               class="form-control"
               placeholder="Contact Person"
-              data-ng-model="area.contact_person"
+              data-ng-model="areasCreateCtrl.contact_person"
               required
               data-ng-minlength="6"
               data-ng-maxlength="100">
@@ -65,7 +64,7 @@
               id="contact_no"
               class="form-control"
               placeholder="Contact No."
-              data-ng-model="area.contact_no"
+              data-ng-model="areasCreateCtrl.contact_no"
               required
               data-min="6"
               data-max="100">
@@ -96,29 +95,26 @@
               id="status"
               class="form-control"
               placeholder="Current Status"
-              data-ng-model="area.status"
+              data-ng-model="areasCreateCtrl.status"
               data-min="6"
               data-max="100">
             </div>
           </div>
 
         <section class="row">
-            <alert id="flash" data-ng-show="areasUpdateCtrl.flash.error" type="{{areasUpdateCtrl.alert.type}}" close="closeAlert()" >{{ areasUpdateCtrl.flash.error }}</alert>
+            <alert id="flash" data-ng-show="areasCreateCtrl.flash" type="{{areasCreateCtrl.alert.type}}" close="closeAlert()" >{{ areasCreateCtrl.flash }}</alert>
         </section>
-
-        <hr/>
-
-        <button type="submit"
-        class="btn btn-success btn-w-lg"
-        >Update</button>
-
-        <button type="button" class="btn btn-default btn-w-lg" ng-click="cancel()">Close</button>      
   
-      </fieldset>
+        </fieldset>
+    </form>
+  </div>
 
-  </form>
-
-</div>
+  <div class="modal-footer">
+        <button type="button"
+        class="btn btn-success btn-w-lg"
+        data-ng-click="areasCreateCtrl.create(); ok()">Save</button>
+        <button type="button" class="btn btn-default btn-w-lg" data-ng-click="cancel()">Close</button>    
+  </div>
 
 
 </section>
