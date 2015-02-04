@@ -2,7 +2,7 @@ $nav_bg:                $dark;
 $nav_border:            darken($nav_bg, 10%);
 $sub_nav_bg:            $nav_bg;
 $link_color:            $text-color;
-$link_active_bg:        $brand-primary;
+$link_active_bg:        $skin;
 
 #nav-container {
     z-index: 11; // should be highter than top header
@@ -122,7 +122,7 @@ $link_active_bg:        $brand-primary;
             &:hover,
             &.active {
                 a {
-                    color: $brand-primary;
+                    color: $skin;
                 }
             }
             &:last-child > a {

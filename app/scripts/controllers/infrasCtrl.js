@@ -2,79 +2,99 @@
 
 'use strict';
 
-angular.module('aidphApp')
-  .controller('InfrasCtrl', function (SERVER, $scope, $resource) {
-	
-    // var Infras = $resource(SERVER + '/infras/:id', {id: '@id'}, { 'query': { method: 'GET'}});
-    var Infras = $resource(SERVER + '/infras/:id', {id: '@id'}, {'query': {method: 'GET', isArray: false}}); 
-	   // $resource('/posts', {}, {'query': {method: 'GET', isArray: false}}); 
-    var promise = Infras.query();
-    console.log(promise.getData());
-    // 
-    // $scope.infras = promise;
-    // data.$promise(function(response){
-    //   console.log(response);
-    // });
+var app = angular.module('aidphApp');
+  
+  app.controller('InfrasController', ['$scope', '$filter', 'infras', '$modal', '$log',
+    function ($scope, $filter, infras, $modal, $log) {
+    var init = {};
 
-    // var entries = AreaService.query(function() {
-    //   console.log("Query: "+entries);
-    // });
+    $scope.data = infras.data;
+    $scope.pageDetail = infras.meta;
 
-	  // $scope.areas = areaResponse.data.data;
-	  // $scope.pageDetail = areaResponse.data.meta;
+	  $scope.searchKeywords = '';
+	  $scope.filteredData = [];
+	  $scope.row = '';
 
-   //  $scope.currentPage = 1;
-	  // $scope.searchKeywords = '';
-	  // $scope.filteredAreas = [];
-	  // $scope.row = '';
-   //  $scope.numPerPageOpt = [3, 5, 10, 20];
-   //  $scope.numPerPage = $scope.numPerPageOpt[2];
-   //  $scope.currentPageAreas = [];
+    $scope.numPerPageOpt = [3, 5, 10, 20];
+    $scope.numPerPage = $scope.numPerPageOpt[2];
+    $scope.currentPage = 1;
+    $scope.currentPageData = [];
 
 
-   //    $scope.setPage = function (pageNo) {
-   //      $scope.currentPage = pageNo;
-   //    };
-   //    $scope.select = function(page) {
-   //      var end, start;
-   //      start = (page - 1) * $scope.numPerPage;
-   //      end = start + $scope.numPerPage;
-   //      return $scope.currentPageAreas = $scope.filteredAreas.slice(start, end);
-   //    };
+      $scope.setPage = function () {
+        $scope.select($scope.currentPage);
+      };
+      $scope.select = function(page) {
+        var end, start;
+        start = (page - 1) * $scope.numPerPage;
+        end = start + $scope.numPerPage;
+        return $scope.currentPageData = $scope.filteredData.slice(start, end);
+      };
 
-   //    $scope.onFilterChange = function() {
-   //      $scope.select(1);
-   //      $scope.currentPage = 1;
-   //      return $scope.row = '';
-   //    };
-   //    $scope.onNumPerPageChange = function() {
-   //      $scope.select(1);
-   //      return $scope.currentPage = 1;
-   //    };
-   //    $scope.onOrderChange = function() {
-   //      $scope.select(1);
-   //      return $scope.currentPage = 1;
-   //    };
+      $scope.onFilterChange = function() {
+        $scope.select(1);
+        $scope.currentPage = 1;
+        return $scope.row = '';
+      };
 
-   //    $scope.search = function() {
-   //      $scope.filteredAreas = $filter('filter')($scope.areas, $scope.searchKeywords);
-   //      return $scope.onFilterChange();
-   //    };
+      $scope.onNumPerPageChange = function() {
+        $scope.select(1);
+        return $scope.currentPage = 1;
+      };
 
-   //    $scope.order = function(rowName) {
-   //      if ($scope.row === rowName) {
-   //        return;
-   //      }
-   //      $scope.row = rowName;
-   //      $scope.filteredAreas = $filter('orderBy')($scope.areas, rowName);
-   //      return $scope.onOrderChange();
-   //    };
+      $scope.onOrderChange = function() {
+        $scope.select(1);
+        return $scope.currentPage = 1;
+      };
 
-   //    init = function() {
-   //      $scope.search();
-   //      return $scope.select($scope.currentPage);
-   //    };
-   //    return init();
+      $scope.search = function() {
+        $scope.filteredData = $filter('filter')($scope.data, $scope.searchKeywords);
+        return $scope.onFilterChange();
+      };
 
-  });
+      $scope.order = function(rowName) {
+        if ($scope.row === rowName) {
+          return;
+        }
+        $scope.row = rowName;
+        $scope.filteredData = $filter('orderBy')($scope.data, rowName);
+        return $scope.onOrderChange();
+      };
+
+  $scope.modalUpdate = function (size, selectedInfra) {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'views/infras/edit-infra.html',
+      controller: function ($scope, $modalInstance, infra) {
+          $scope.infra = infra;
+      },
+      size: size,
+      resolve: {
+        infra: function () {
+          return selectedInfra;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedInfra) {
+      $scope.selected = selectedInfra;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+
+  };
+
+
+      init = function() {
+        $scope.search();
+        return $scope.select($scope.currentPage);
+      };
+
+        return init();
+
+      }
+  ]).controller('infrasEditState', ['$scope', function ($scope) {
+    
+  }]);
+
 }).call(this);

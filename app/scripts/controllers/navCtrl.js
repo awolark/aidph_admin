@@ -3,7 +3,7 @@
 'use strict';  
 
 angular.module('aidphApp')
-  .controller('NavCtrl', [
+  .controller('NavController', [
     '$scope', 'taskStorage', 'filterFilter', function($scope, taskStorage, filterFilter) {
       var tasks;
       tasks = $scope.tasks = taskStorage.get();

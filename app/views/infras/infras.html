@@ -1,0 +1,126 @@
+<!-- breadcrumbs -->
+<div class="panel-body breadcrumb-container">
+  <ol class="breadcrumb">
+      <li><a href="javascript:;">Home</a></li>
+      <li><a href="javascript:;">Library</a></li>
+      <li class="active">Data</li>
+  </ol>
+</div>
+<!-- breadcrumbs -->
+
+<div class="page page-table">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Manage Infrastructure</strong></div>
+
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text"
+                               placeholder="search"
+                               class="form-control"
+                               data-ng-model="searchKeywords"
+                               data-ng-keyup="search()">
+                    </form>
+                </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredData.length}}/{{data.length}} entries
+                    </span>
+                </div>
+
+                <div class="col-sm-2 pull-right tbl-add-btn-wrap">
+                    <button class="btn btn-w-lg btn-success btn-gap ng-scope">New</button>
+                  </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th width="20%"><div class="th">
+                        Name
+                        <span class="glyphicon glyphicon-chevron-up"
+                              data-ng-click=" order('name') "
+                              data-ng-class="{active: row == 'name'}"></span>
+                        <span class="glyphicon glyphicon-chevron-down"
+                              data-ng-click=" order('-name') "
+                              data-ng-class="{active: row == '-name'}"></span>
+                    </div></th>
+                    <th width="15%"><div class="th">
+                        Type
+                        <span class="glyphicon glyphicon-chevron-up"
+                              data-ng-click=" order('type') "
+                              data-ng-class="{active: row == 'type'}"></span>
+                        <span class="glyphicon glyphicon-chevron-down"
+                              data-ng-click=" order('-type') "
+                              data-ng-class="{active: row == '-type'}"></span>
+                    </div></th>
+                    <th width="20%"><div class="th">
+                        Location
+                        <span class="glyphicon glyphicon-chevron-up"
+                              data-ng-click=" order('location') "
+                              data-ng-class="{active: row == 'location'}"></span>
+                        <span class="glyphicon glyphicon-chevron-down"
+                              data-ng-click=" order('-location') "
+                              data-ng-class="{active: row == '-location'}"></span>
+                    </div></th>
+                    <th width="30%"><div class="th">
+                        Remarks
+                        <span class="glyphicon glyphicon-chevron-up"
+                              data-ng-click=" order('remarks') "
+                              data-ng-class="{active: row == 'remarks'}"></span>
+                        <span class="glyphicon glyphicon-chevron-down"
+                              data-ng-click=" order('-remarks') "
+                              data-ng-class="{active: row == '-remarks'}"></span>
+                    </div></th>
+                    <th width="15%"><div class="th">
+                        Action
+                    </div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="infra in currentPageData">
+                    <td>{{infra.name}}</td>
+                    <td>{{infra.type}}</td>
+                    <td>{{infra.brgy_name}} | {{infra.location}}</td>
+                    <td>{{ infra.remarks }}</td>
+                    <td>
+                      <a href="javascript:;" class="btn-icon btn-icon-sm bg-success"><i class="fa fa-map-marker" tooltip-placement="top" tooltip="View on Map" tooltip-append-to-body="true"></i></a>
+                    
+                      <a data-ng-click="modalUpdate('lg', infra)" href="javascript:;" class="btn-icon btn-icon-sm bg-info"><i class="fa fa-pencil-square-o" tooltip-placement="top" tooltip="Update" tooltip-append-to-body="true"></i></a>
+
+                      <a href="javascript:;" class="btn-icon btn-icon-sm bg-danger"><i class="fa fa-trash" tooltip-placement="top" tooltip="Delete" tooltip-append-to-body="true"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredData.length"
+                                max-size="4"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"
+                                ng-change="setPage()"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>

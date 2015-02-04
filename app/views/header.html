@@ -1,9 +1,8 @@
-<header class="clearfix" data-ng-controller="SessionsCtrl">
-
+<header class="clearfix" data-ng-controller="SessionsController">
     <!-- Logo -->
     <div class="logo">
-        <a href="#/">
-            <!-- <span class="logo-icon glyphicon glyphicon-fire"></span> -->
+        <a ui-sref="indexState">
+            <span><img src="images/aidph/icon.png"></span>
             <span>{{main.brand}}</span>
         </a>
     </div>
@@ -76,7 +75,7 @@
             </li>
             <li class="dropdown text-normal nav-profile" dropdown >
                 <a href="javascript:;" class="dropdown-toggle" dropdown-toggle style="min-width:160px;">
-                    <img data-ng-src="{{ image === undefined ? 'images/icon-user-default.png' : image }}" alt="" class="img-circle img30_30">
+                    <img data-ng-src="{{ image === '' ? 'images/icon-user-default.png' : image }}" alt="" class="img-circle img30_30">
                     <span class="hidden-xs">
                         <span> {{ username === undefined ? '' : username }} </span>
                     </span>

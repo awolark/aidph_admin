@@ -99,9 +99,9 @@
             }
           }
         });
-        modalInstance.result.then((function(selectedItem) {
+        modalInstance.result.then(function(selectedItem) {
           $scope.selected = selectedItem;
-        }), function() {
+        }, function() {
           $log.info('Modal dismissed at: ' + new Date());
         });
       };

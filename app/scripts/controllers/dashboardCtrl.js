@@ -3,6 +3,6 @@
 'use strict';  
 
 angular.module('aidphApp')
-  .controller('DashboardCtrl', function() {});
+  .controller('DashboardController', function() {});
 
 }).call(this);

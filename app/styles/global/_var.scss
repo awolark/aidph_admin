@@ -124,7 +124,7 @@ $border-radius-small:       0 !default;
 //** Global color for active items (e.g., navs or dropdowns).
 $component-active-color:    #fff !default;
 //** Global background color for active items (e.g., navs or dropdowns).
-$component-active-bg:       $brand-primary !default;
+$component-active-bg:       $skin !default;
 
 //** Width of the `border` for generating carets that indicator dropdowns.
 $caret-width-base:          4px !default;
@@ -448,17 +448,17 @@ $nav-pills-active-link-hover-color:         $component-active-color !default;
 //
 //##
 
-$pagination-color:                     $link-color !default;
+$pagination-color:                     $skin !default;
 $pagination-bg:                        $state-default-bg !default;
 $pagination-border:                    $state-default-bg !default;
 
 $pagination-hover-color:               $reverse !default;
-$pagination-hover-bg:                  $brand-primary !default;
-$pagination-hover-border:              $brand-primary !default;
+$pagination-hover-bg:                  $skin !default;
+$pagination-hover-border:              $skin !default;
 
 $pagination-active-color:              #fff !default;
-$pagination-active-bg:                 $brand-primary !default;
-$pagination-active-border:             $brand-primary !default;
+$pagination-active-bg:                 $skin !default;
+$pagination-active-border:             $skin !default;
 
 $pagination-disabled-color:            $gray-light !default;
 $pagination-disabled-bg:               $state-default-bg !default;

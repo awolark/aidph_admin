@@ -3,14 +3,12 @@
 'use strict';  
 
 angular.module('aidphApp')
- .factory('AreaService', function($http, SERVER) {
-
-    return {
-      get: function() {
-        return $http.get(SERVER + '/areas');                
-      }
-    };
-    
+ .factory('Area', function($resource, SERVER) {
+    return $resource( SERVER + '/areas/:id', {id: '@id'}, 
+    	{
+    		'query': {method: 'GET', 'params': {'page': 1},isArray: false},
+    		'update': { method: 'PUT' }
+    	});	
   });
 
 }).call(this);

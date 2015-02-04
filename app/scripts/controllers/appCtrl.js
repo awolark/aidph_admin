@@ -3,7 +3,7 @@
 'use strict';  
 
 angular.module('aidphApp')
-  .controller('AppCtrl', [
+  .controller('AppController', [
     '$scope', '$location', 'APP_NAME', function($scope, $location, APP_NAME) {
 
       $scope.isSpecificPage = function() {

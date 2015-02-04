@@ -4,9 +4,9 @@
 
 /**
  * @ngdoc overview
- * @name aidphAdminApp
+ * @name aidphApp
  * @description
- * # aidphAdminApp
+ * # aidphApp
  *
  * Main module of the application.
  */
@@ -15,16 +15,16 @@ angular
     'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngRoute',
+    'ui.router',
     'ngSanitize',
     // 3rd Party Modules
     'ui.bootstrap',
+    'angularUtils.directives.dirPagination',
     //Custom modules
     'app.ui.ctrls',
     'app.ui.directives',
     'app.ui.services',
     'app.directives',
-    'app.tables',
     'app.task'
   ])
 
@@ -54,45 +54,82 @@ angular
     $httpProvider.interceptors.push('myHttpInterceptor');
   })
 
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
+// Routing
+  .config(function ($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      // Home Page
+      .state('indexState', {
+        url: '/',
         templateUrl: 'views/dashboard.html'
       })
-      .when('/login', {
+      // Login
+      .state('loginState', {
+        url: '/login',
         templateUrl: 'views/pages/signin.html',
         controller: 'SessionsCtrl'
       })
-      .when('/lock', {
+      // Lock
+      .state('lockState', {
+        url: '/lock',
         templateUrl: 'views/pages/lock-screen.html',
         controller: 'SessionsCtrl'        
       })
-      .when('/areas', {
-        templateUrl: 'views/pages/areas.html',
-        controller: 'AreasCtrl',
+      // Areas
+      .state('areasState', {
+        url: '/areas',
+        templateUrl: 'views/areas/areas.html',
+        controller: 'AreasController',
+        controllerAs: 'areasCtrl',
         resolve: {
-          areaResponse : function(AreaService) {
-            return AreaService.get();
+          areasService: 'Area',
+          areaData: function(areasService) {
+            return areasService.query({limit: 25}).$promise;
           }
         }
       })
-      .when('/infrastructures', {
-        templateUrl: 'views/pages/infras.html',
-        controller: 'InfrasCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
+    .state('createAreaState', {
+      url: '/areas/new',
+      templateUrl: 'views/areas/add-areas.html'
+    })        
+    .state('viewAreaState', {
+      url: '/areas/:id',
+      templateUrl: 'views/areas/view-areas.html'
+    })       
+    .state('updateAreaState', {
+      url: '/areas/:id/edit',
+      templateUrl: 'views/areas/edit-areas.html'
+    })       
+    // Infrastructures
+    .state('infrasState', {
+      url: '/infrastructures',
+      templateUrl: 'views/infras/infras.html',
+      controller: 'InfrasController',
+      resolve: {
+        infrasResource: 'InfrasResource',
+        infras: function(infrasResource) {
+          return infrasResource.get().$promise;
+        }
+      }
+    });
+  // .state('infrasEditState', {
+  //   url: '/infrastructures/edit/:infraId',
+  //   templateUrl: 'views/infras/edit-infra.html',
+  //   controller: 'EditInfrasController'
+  // });
+      
+    $urlRouterProvider.otherwise('/');
   })
+// Routing Ends here
 
-  .run(function($rootScope, $location, AuthenticationService, FlashService) {
+// Route Watcher
+  .run(function($rootScope, $state, $location, AuthenticationService, FlashService) {
 
-    var routesThatRequireAuth = ['/', '#/', '/areas'];
+    var routesThatRequireAuth = ['/', '#/', '/areas', '/infrastructures'];
 
-    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    $rootScope.$on('$stateChangeStart', function(event, next, current) {
 
       if(_(routesThatRequireAuth).contains($location.path()) && !AuthenticationService.isLoggedIn()) {
-        $location.path('/login');
+        $location.path('/login', {});
         FlashService.show('Please Login to Continue');
         return;
       }
@@ -111,6 +148,11 @@ angular
 
     });
 
+  })
+
+// Paginator Template Config
+  .config(function(paginationTemplateProvider) {
+      paginationTemplateProvider.setPath('views/templates/dirPagination.tpl.html');
   });
 
 
