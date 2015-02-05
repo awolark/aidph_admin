@@ -28,7 +28,6 @@ angular
     'app.task',
     'app.custom.filters'
   ])
-
    .constant('APP_NAME', '#aidPH')
    .constant('SERVER', 'http://api.aidph.dev:80')
    
@@ -75,6 +74,7 @@ angular
         templateUrl: 'views/pages/lock-screen.html',
         controller: 'SessionsController'        
       })
+      
       // Areas
       .state('areasState', {
         url: '/areas',
@@ -88,36 +88,21 @@ angular
           }
         }
       })
-    // .state('createAreaState', {
-    //   url: '/areas/new',
-    //   templateUrl: 'views/areas/add-areas.html'
-    // })        
-    // .state('viewAreaState', {
-    //   url: '/areas/:id',
-    //   templateUrl: 'views/areas/view-areas.html'
-    // })       
-    // .state('updateAreaState', {
-    //   url: '/areas/:id',
-    //   templateUrl: 'views/areas/edit-areas.html'
-    // })       
-    // Infrastructures
-    .state('infrasState', {
-      url: '/infrastructures',
-      templateUrl: 'views/infras/infras.html',
-      controller: 'InfrasController',
-      resolve: {
-        infrasResource: 'InfrasResource',
-        infras: function(infrasResource) {
-          return infrasResource.get().$promise;
+
+      // Infrastructures
+      .state('infrasState', {
+        url: '/infras',
+        templateUrl: 'views/infras/infras.html',
+        controller: 'InfrasController',
+        controllerAs: 'infrasCtrl',
+        resolve: {
+          infrasService: 'Infrastructure',
+          responseData: function(infrasService) {
+            return infrasService.query({limit: 25}).$promise;
+          }
         }
-      }
-    });
-  // .state('infrasEditState', {
-  //   url: '/infrastructures/edit/:infraId',
-  //   templateUrl: 'views/infras/edit-infra.html',
-  //   controller: 'EditInfrasController'
-  // });
-      
+      });
+
     $urlRouterProvider.otherwise('/');
   })
 // Routing Ends here

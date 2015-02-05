@@ -1,14 +1,13 @@
-<section data-ng-controller="AreasUpdateController as areasUpdateCtrl">
+<div class="modal-content" data-ng-controller="AreasUpdateController as areasUpdateCtrl">
 
-  <div class="modal-header">
-    <h3 class="modal-title">Update: {{area.name | ucFirst}} | {{area.type  | uppercase}}</h3>
+  <div class="modal-header dialog-header-confirm">
+    <h4 class="modal-title">
+      <i class="fa fa-pencil-square-o"></i>  Update: {{area.name | ucFirst}} | {{area.type  | uppercase}}
+    </h4>
   </div>
-  
+
     <div class="modal-body">
-
-<!--       <form name="form_signup" class="form-horizontal form-validation" data-ng-submit="areasUpdateCtrl.update()"> -->
        <form name="updateAreaForm" class="form-horizontal form-validation" novalidate>
-
         <fieldset>
 
           <div class="form-group">
@@ -112,9 +111,9 @@
   <div class="modal-footer">
         <button type="button"
         class="btn btn-success btn-w-lg"
-        data-ng-disabled="!areasUpdateCtrl.canSubmit()" data-ng-click="areasUpdateCtrl.update(area); ok()">Update</button>
+        data-ng-disabled="updateAreaForm.$invalid" data-ng-click="areasUpdateCtrl.update(area); ok()">Update</button>
         <button type="button" class="btn btn-default btn-w-lg" data-ng-click="cancel()">Close</button>    
   </div>
 
 
-</section>
+</div>

@@ -1,8 +1,8 @@
-<div class="modal-content" data-ng-controller="AreasCreateController as areasCreateCtrl">
+<div class="modal-content" data-ng-controller="InfrasCreateController as infrasCreateCtrl">
   
   <div class="modal-header dialog-header-confirm">
     <h4 class="modal-title">
-      <i class="fa fa-floppy-o"></i>  Create Area
+      <i class="fa fa-floppy-o"></i>  Create Infrastructure
     </h4>
   </div>
   
@@ -14,14 +14,14 @@
 
           <div class="form-group">
             <div class="col-sm-3">
-              <label for="area">Area Name</label>
+              <label for="area">Infrastructure Name</label>
             </div>
             <div class="col-sm-9">
               <input type="text"
               id="area"
               class="form-control"
-              placeholder="Area Name"
-              data-ng-model="areasCreateCtrl.name"
+              placeholder="Infrastructure Name"
+              data-ng-model="infrasCreateCtrl.name"
               required
               data-ng-minlength="3"
               data-ng-maxlength="100">
@@ -35,9 +35,9 @@
             <div class="col-sm-9">
               <span class="ui-select">
                 <select 
-                ng-model="areasCreateCtrl.type"
-                ng-init="areasCreateCtrl.areaTypes[0]"
-                ng-options="type for type in areasCreateCtrl.areaTypes">
+                ng-model="infrasCreateCtrl.type"
+                ng-init="infrasCreateCtrl.types[0]"
+                ng-options="type for type in infrasCreateCtrl.types">
                 </select>
               </span>
             </div>
@@ -45,14 +45,29 @@
 
           <div class="form-group">
             <div class="col-sm-3">
-              <label for="contact_person">Contact Person</label>
+              <label for="type">Barangay</label>
+            </div>
+            <div class="col-sm-9">
+              <span class="ui-select">
+                <select 
+                ng-model="infrasCreateCtrl.brgy_area_id"
+                ng-init="infrasCreateCtrl.types[0]"
+                ng-options="brgy.id as brgy.name for brgy in infrasCreateCtrl.brgys">
+                </select>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="location">Location</label>
             </div>
             <div class="col-sm-9">
               <input type="text"
-              id="contact_person"
+              id="location"
               class="form-control"
-              placeholder="Contact Person"
-              data-ng-model="areasCreateCtrl.contact_person"
+              placeholder="Location"
+              data-ng-model="infrasCreateCtrl.location"
               required
               data-ng-minlength="6"
               data-ng-maxlength="100">
@@ -61,57 +76,42 @@
 
           <div class="form-group">
             <div class="col-sm-3">
-              <label for="contact_no">Contact No.</label>
+              <label for="remarks">Remarks</label>
             </div>
             <div class="col-sm-9">
-              <input type="text"
-              id="contact_no"
+              <textarea type="text"
+              id="remarks"
               class="form-control"
-              placeholder="Contact No."
-              data-ng-model="areasCreateCtrl.contact_no"
-              required
-              data-min="6"
-              data-max="100">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-sm-3">
-              <label for="parent_area">Parent Area</label>
-            </div>
-            <div class="col-sm-9">
-              <span class="ui-select">
-                <select id="parent_area">
-                  <option>Mustard</option>
-                  <option>Ketchup</option>
-                  <option>Barbecue</option>
-                </select>
-              </span>
+              placeholder="Remarks"
+              data-ng-model="infrasCreateCtrl.remarks"
+              row="10"
+              col="20">
+            </textarea>
             </div>
           </div>
           
-            <div class="form-group">
+          <div class="form-group">
             <div class="col-sm-3">
-              <label for="status">Current Status</label>
+              <label for="status">Status</label>
             </div>
             <div class="col-sm-9">
               <input type="text"
               id="status"
               class="form-control"
               placeholder="Current Status"
-              data-ng-model="areasCreateCtrl.status"
+              data-ng-model="infrasCreateCtrl.status"
               data-min="6"
               data-max="100">
             </div>
           </div>
 
 <!--         <section class="row">
-            <alert id="flash" data-ng-show="areasCreateCtrl.flash" type="{{areasCreateCtrl.alert.type}}" close="closeAlert()" >{{ areasCreateCtrl.flash }}</alert>
+            <alert id="flash" data-ng-show="infrasCreateCtrl.flash" type="{{infrasCreateCtrl.alert.type}}" close="closeAlert()" >{{ infrasCreateCtrl.flash }}</alert>
         </section> -->
   
           <div class="modal-footer">
                 <button type="submit"
-                class="btn btn-success btn-w-lg" data-ng-click="areasCreateCtrl.create(); ok()" data-ng-disabled="createAreaForm.$invalid">Save</button>
+                class="btn btn-success btn-w-lg" data-ng-click="infrasCreateCtrl.create(); ok()" data-ng-disabled="createAreaForm.$invalid">Save</button>
                 <button type="button" class="btn btn-default btn-w-lg" data-ng-click="cancel()">Close</button>    
           </div>
 

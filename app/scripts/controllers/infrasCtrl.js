@@ -2,99 +2,243 @@
 
 'use strict';
 
-var app = angular.module('aidphApp');
+var aidphApp = angular.module('aidphApp');
   
-  app.controller('InfrasController', ['$scope', '$filter', 'infras', '$modal', '$log',
-    function ($scope, $filter, infras, $modal, $log) {
-    var init = {};
+  aidphApp.controller('InfrasController', ['$scope', '$rootScope', '$filter', 'responseData', 'Infrastructure', 'modalService', 'logger', 
+    function ($scope, $rootScope, $filter, responseData, Infrastructure, modalService, logger) {
 
-    $scope.data = infras.data;
-    $scope.pageDetail = infras.meta;
+   var self = this;
+   self.numPerPageOpt = [10, 25, 35, 50];
+   self.numPerPage = self.numPerPageOpt[1];
+   self.data = [];
+   self.totalData = 0;
+   self.currentPage = 1;
+   
+   // Resource Object
+   var resource = Infrastructure;
 
-	  $scope.searchKeywords = '';
-	  $scope.filteredData = [];
-	  $scope.row = '';
+   var resolveData = function(response){
+        self.data = response.data;
+        self.totalData = response.meta.pagination.total;
+        self.numPerPage = response.meta.pagination.per_page;
+        self.currentPage = response.meta.pagination.current_page;
+       };
+   
+   self.currentPage = 1;
 
-    $scope.numPerPageOpt = [3, 5, 10, 20];
-    $scope.numPerPage = $scope.numPerPageOpt[2];
-    $scope.currentPage = 1;
-    $scope.currentPageData = [];
+    // resolve promise to fill table with data
+   responseData.$promise.then( function(response){
+                self.data = response.data;
+                self.totalData = response.meta.pagination.total;
+              });
+
+   self.pageChanged = function(newPage) {
+      requestData(newPage, self.numPerPage, resolveData);
+   };
+
+   function requestData(newPage, numPerPage, callback) {
+      var params = {page: newPage, limit: numPerPage};
+      resource.query(params).$promise.then(callback);
+   }
+
+   function remove(selectedArea) {
+      var selectedId = selectedArea.id;
+      
+      if(selectedArea) {           
+          resource.delete({id: selectedId}).$promise.then(function(response){
+             logger.log('Data Successfully Deleted');              
+              
+              for (var i in data) {
+                if (data[i] === selectedArea) {
+                  data.splice(i, 1);
+                }
+              }
+              
+          }, function(errorResponse) {              
+             logger.logError('Cannot Delete data');
+          });
 
 
-      $scope.setPage = function () {
-        $scope.select($scope.currentPage);
-      };
-      $scope.select = function(page) {
-        var end, start;
-        start = (page - 1) * $scope.numPerPage;
-        end = start + $scope.numPerPage;
-        return $scope.currentPageData = $scope.filteredData.slice(start, end);
-      };
-
-      $scope.onFilterChange = function() {
-        $scope.select(1);
-        $scope.currentPage = 1;
-        return $scope.row = '';
-      };
-
-      $scope.onNumPerPageChange = function() {
-        $scope.select(1);
-        return $scope.currentPage = 1;
-      };
-
-      $scope.onOrderChange = function() {
-        $scope.select(1);
-        return $scope.currentPage = 1;
-      };
-
-      $scope.search = function() {
-        $scope.filteredData = $filter('filter')($scope.data, $scope.searchKeywords);
-        return $scope.onFilterChange();
-      };
-
-      $scope.order = function(rowName) {
-        if ($scope.row === rowName) {
-          return;
-        }
-        $scope.row = rowName;
-        $scope.filteredData = $filter('orderBy')($scope.data, rowName);
-        return $scope.onOrderChange();
-      };
-
-  $scope.modalUpdate = function (size, selectedInfra) {
-
-    var modalInstance = $modal.open({
-      templateUrl: 'views/infras/edit-infra.html',
-      controller: function ($scope, $modalInstance, infra) {
-          $scope.infra = infra;
-      },
-      size: size,
-      resolve: {
-        infra: function () {
-          return selectedInfra;
-        }
+      } else {
+         resource.delete({id: selectedId});
       }
-    });
+   }
+  /*
+    Modals here 
+   */
+  self.modalCreate = function() {
+      var modalDefaults = {
+      		// TODO create add.html
+          // REPLACE 
+            templateUrl: 'views/infras/add.html',
+            controller: function($scope, $modalInstance) {
+              $scope.ok = function() {
+                  $modalInstance.close();
+              };
 
-    modalInstance.result.then(function (selectedInfra) {
-      $scope.selected = selectedInfra;
-    }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
-    });
-
+              $scope.cancel = function() {
+                $modalInstance.dismiss('cancel');
+              };
+            }
+      };
+      var modalOptions = {};
+      modalService.showModal(modalDefaults, modalOptions);
   };
 
+  // Delete a Record
+  self.modalRemove = function(selectedData) {
+    var modalDefaults = {
+       templateUrl: 'views/templates/confirm-delete-tpl.html',
+       controller: function($scope, $modalInstance) {
+        
+        $scope.ok = function() {
+          remove(selectedData);
+          
+          $modalInstance.close();
+        };
 
-      init = function() {
-        $scope.search();
-        return $scope.select($scope.currentPage);
-      };
-
-        return init();
+        $scope.cancel = function() {
+          $modalInstance.dismiss('cancel');
+        };
 
       }
-  ]).controller('infrasEditState', ['$scope', function ($scope) {
+    };
+      var modalOptions = {};
+      modalService.showModal(modalDefaults, modalOptions);
+  };
+
+  // Update a Record
+  self.modalUpdate = function(selectedData) {
+      var modalDefaults = {
+      	// TODO create update.html  
+        // REPLACE     	
+        templateUrl: 'views/infras/update.html',
+        controller: function($scope, $modalInstance, data) {
+          $scope.data = data;
+
+          $scope.ok = function() {
+            $modalInstance.close($scope.data);   
+          };
+
+          $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+            var data = resource.query({limit: 25}).$promise.then(function(response){
+              self.currentPage = 1;
+              data = response.data;
+            });
+          };
+
+        },
+        resolve: {
+          area: function() {
+            return selectedData;
+          }
+        }
+      };
+      var modalOptions = {};
+      modalService.showModal(modalDefaults, modalOptions);
+  };
+
+  // For Alert Options
+    self.alert = {
+      type: 'danger'
+    };
     
+    self.closeAlert = function() {
+      $rootScope.flash = '';
+    };
+  
+  // watcher for filters
+  // $scope.$watch('q', function (key) {
+  //     var q = null;
+  //     if (key) {
+  //         q = {
+  //             q: key
+  //         };
+  //     }
+  //     $scope.projects = Area.query(q);
+  // });
+  // 
+
+  // $scope.find() = function() {
+  //   $scope.area = Area.get({
+  //     id: $stateParams.id
+  //   });
+  // };
+
+}]);
+
+// REPLACE
+aidphApp.controller('InfrasCreateController', ['$scope', 'Infrastructure', 'modalService', '$location', 'Notify', 'Area', 'AreaHelper',
+  function ($scope,  Infrastructure, modalService, $location, Notify, Area, AreaHelper) {
+    var self = this;
+    self.flash = '';
+    self.types = ['BRIDGE', 'BUILDING', 'DAM'];
+    var resource = Infrastructure;
+    self.brgys = [];
+
+    AreaHelper.getBrgys().success(function(response){
+      self.brgys = response;
+    });
+
+    self.create = function() {
+          // Create new Data
+          // REPLACE
+          var data = new Infrastructure({
+            name: this.name,
+            type: this.type,
+            location: this.location,
+            remarks: this.remarks,
+            status: this.status,
+            brgy_area_id: this.brgy_area_id
+            // latlng: this.name,
+            // bounds: this.name,
+            // parent_id: self.parent_id,
+          });
+          
+          console.log(data);
+
+          data = resource.save(data).$promise.then(function(response){
+              console.log(response);
+              Notify.sendMsg(response.message, {'id': response.id});
+          }, function(errorResponse) {
+              self.flash = errorResponse.data.error.message; 
+          });
+      };
+
+    self.alert = {
+      type: 'danger'
+    };
+
+
   }]);
 
-}).call(this);
+// REPLACE
+aidphApp.controller('InfrasUpdateController', ['$scope', 'Infrastructure', 'logger', 
+  function ($scope, Infrastructure, logger) {
+
+    var self = this;
+    var resource = Infrastructure;
+
+    self.areaTypes = ['NATIONAL', 'REGION','PROVINCE', 'CITY', 'BRGY'];
+
+    self.update =  function(updatedData) { 
+      resource.update({id: updatedData.id}, updatedData).$promise.then(function(response){
+              logger.logSuccess('Data Successfully Updated');
+          }, function(errorResponse) {
+              logger.logWarning(errorResponse.data.error.message); 
+          });
+    };
+
+    self.alert = {
+      type: 'danger'
+    };
+
+    self.closeAlert = function() {
+      self.flash.error = '';
+    };
+
+}]);
+
+
+}).call();

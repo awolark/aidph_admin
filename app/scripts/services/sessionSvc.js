@@ -14,9 +14,6 @@ angular.module('aidphApp')
       unset: function(key) {
         return localStorage.removeItem(key);
       }
-      // getUserData: function() {
-      //   return JSON.parse(localStorage.getItem('user_data'));        
-      // }
     };
   }]);
 
