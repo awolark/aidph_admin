@@ -48,9 +48,9 @@ var aidphApp = angular.module('aidphApp');
           resource.delete({id: selectedId}).$promise.then(function(response){
              logger.log('Data Successfully Deleted');              
               
-              for (var i in data) {
-                if (data[i] === selectedArea) {
-                  data.splice(i, 1);
+              for (var i in self.data) {
+                if (self.data[i] === selectedArea) {
+                  self.data.splice(i, 1);
                 }
               }
               
@@ -116,6 +116,8 @@ var aidphApp = angular.module('aidphApp');
         controller: function($scope, $modalInstance, data) {
           $scope.data = data;
 
+          console.log(data);
+
           $scope.ok = function() {
             $modalInstance.close($scope.data);   
           };
@@ -130,7 +132,7 @@ var aidphApp = angular.module('aidphApp');
 
         },
         resolve: {
-          area: function() {
+          data: function() {
             return selectedData;
           }
         }
@@ -149,24 +151,29 @@ var aidphApp = angular.module('aidphApp');
     };
   
   // watcher for filters
-  // $scope.$watch('q', function (key) {
-  //     var q = null;
-  //     if (key) {
-  //         q = {
-  //             q: key
-  //         };
-  //     }
-  //     $scope.projects = Area.query(q);
-  // });
-  // 
+  $scope.$watch('q', function (key) {
+      var q = null;
+      if (key) {
+          q = {
+              q: key
+          };
+      }
+      $scope.projects = Area.query(q);
+  });
+  
 
-  // $scope.find() = function() {
-  //   $scope.area = Area.get({
-  //     id: $stateParams.id
-  //   });
-  // };
+  $scope.find() = function() {
+    $scope.area = Area.get({
+      id: $stateParams.id
+    });
+  };
 
 }]);
+
+
+
+/*    InfrasCreateController   */  
+
 
 // REPLACE
 aidphApp.controller('InfrasCreateController', ['$scope', 'Infrastructure', 'modalService', '$location', 'Notify', 'Area', 'AreaHelper',
@@ -210,17 +217,24 @@ aidphApp.controller('InfrasCreateController', ['$scope', 'Infrastructure', 'moda
       type: 'danger'
     };
 
-
   }]);
 
+
+
+/* InfrasUpdateController */
+
+
 // REPLACE
-aidphApp.controller('InfrasUpdateController', ['$scope', 'Infrastructure', 'logger', 
-  function ($scope, Infrastructure, logger) {
+aidphApp.controller('InfrasUpdateController', ['$scope', 'Infrastructure', 'logger', 'AreaHelper',
+  function ($scope, Infrastructure, logger, AreaHelper) {
 
     var self = this;
     var resource = Infrastructure;
+    self.types = ['BRIDGE', 'BUILDING', 'DAM'];
 
-    self.areaTypes = ['NATIONAL', 'REGION','PROVINCE', 'CITY', 'BRGY'];
+    AreaHelper.getBrgys().success(function(response){
+      self.brgys = response;
+    });
 
     self.update =  function(updatedData) { 
       resource.update({id: updatedData.id}, updatedData).$promise.then(function(response){

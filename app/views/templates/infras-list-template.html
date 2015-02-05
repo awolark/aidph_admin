@@ -54,12 +54,12 @@
     <tbody>
       <tr dir-paginate="item in infrasCtrl.data | filter: q | itemsPerPage: infrasCtrl.numPerPage"
       total-items="infrasCtrl.totalData" current-page="infrasCtrl.currentPage">
-        <td>{{item.name}}</td>
-        <td>{{item.type}}</td>
-        <td>{{item.location}}</td>
-        <td>{{item.remarks}}</td>
-        <td>{{item.status}}</td>
-        <td>
+        <td width="15%">{{item.name}}</td>
+        <td width="10%">{{item.type}}</td>
+        <td width="20%">Brgy.{{item.brgy_name}} , {{item.location}}</td>
+        <td width="30%">{{item.remarks}}</td>
+        <td width="5%">{{item.status}}</td>
+        <td width="15%">
            <a href="javascript:;" class="btn-icon btn-icon-sm bg-success"><i class="fa fa-map-marker" tooltip-placement="top" tooltip="View on Map" tooltip-append-to-body="true"></i></a>
 
            <a data-ng-click="infrasCtrl.modalUpdate(item)" href="javascript:;" class="btn-icon btn-icon-sm bg-info"><i class="fa fa-pencil-square-o" tooltip-placement="top" tooltip="Update" tooltip-append-to-body="true"></i></a>

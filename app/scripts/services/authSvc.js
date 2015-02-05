@@ -5,24 +5,19 @@
 angular.module('aidphApp')
  .factory('AuthenticationService', function ($http, $location, SERVER, $sanitize, SessionService, FlashService) {
     
-    var cacheSession = function() {
+    var cacheSession = function(response) {  
       SessionService.set('authenticated', true);
-    };
-
-    var cacheUserData = function(response) {
       SessionService.set('user_data',JSON.stringify(response.data));
     };
 
+    var cacheUserData = function(response) {
+    };
+
+
     var uncacheSession = function() {
       SessionService.unset('authenticated');
-    };
-
-    var uncacheUserData = function() {
-      SessionService.unset('user_data');
-    };
-
-    var uncacheUserLock = function() {
-      SessionService.unset('lock');
+      SessionService.unset('user_data');   
+      SessionService.unset('lock');         
     };
 
     var loginError = function(response) {
@@ -42,7 +37,6 @@ angular.module('aidphApp')
        
         login.success(cacheSession);
         login.success(FlashService.clear);
-        login.success(cacheUserData);
 
         login.error(loginError);
 
@@ -51,8 +45,6 @@ angular.module('aidphApp')
       logout: function() {
         var logout = $http.delete(  SERVER + '/auth/logout');
         logout.success(uncacheSession); 
-        logout.success(uncacheUserData); 
-        logout.success(uncacheUserLock);
         return logout;
       },
       isLoggedIn: function() {

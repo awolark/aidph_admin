@@ -32,17 +32,18 @@ angular
    .constant('SERVER', 'http://api.aidph.dev:80')
    
    .config(function($provide, $httpProvider) {
-     $provide.factory('myHttpInterceptor', function ($q, $location, SessionService, FlashService) { 
+     $provide.factory('myHttpInterceptor',
+      function ($q, $location, SessionService, FlashService, logger) { 
        return {
          'response': function(response) {
            return response;
          },
          'responseError': function(rejection) {
+           // if(rejection.status === 401 && SessionService.get('lock')){
+           //   $location.path('/lock');
+           //   logger.log('User is locked');
+           // }
            if(rejection.status === 401) {
-             SessionService.unset('authenticated');
-             SessionService.unset('user_data');
-             SessionService.unset('lock');
-
              $location.path('/login');
              FlashService.show(rejection.data.error);        
            }
@@ -108,11 +109,14 @@ angular
 // Routing Ends here
 
 // Route Watcher
-  .run(function($rootScope, $state, $location, AuthenticationService, FlashService) {
+  .run(function($rootScope, $state, $location, AuthenticationService, SessionService, FlashService) {
 
-    var routesThatRequireAuth = ['/', '#/', '/areas', '/infrastructures'];
+    var routesThatRequireAuth = ['/', '#/', '/lock', '/areas', '/infrastructures'];
+    var routesThatDoesntRequireAuth = ['/login'];
 
     $rootScope.$on('$stateChangeStart', function(event, next, current) {
+
+      /* Redirect to login page if user is not logged in */
 
       if(_(routesThatRequireAuth).contains($location.path()) && !AuthenticationService.isLoggedIn()) {
         $location.path('/login', {});
@@ -120,17 +124,26 @@ angular
         return;
       }
 
-      var routesThatDoesntRequireAuth = ['/login'];
+      if(SessionService.get('lock') && AuthenticationService.isLoggedIn()){
+        $location.path('/lock');
+        // logger.log('User is locked');
+      }
+
+
+      /* Redirect to index if user is logged in */
 
       if(_(routesThatDoesntRequireAuth).contains($location.path()) && AuthenticationService.isLoggedIn()) {
          $location.path('/');
          return;
       }
 
-      if($location.path() === '/lock' && !AuthenticationService.isLoggedIn()) {
-         $location.path('/login');
-         return;
-      }
+
+      /* Redirect to login if user */
+
+      // if($location.path() === '/lock' && !AuthenticationService.isLoggedIn()) {
+      //    $location.path('/login');
+      //    return;
+      // }
 
     });
 
