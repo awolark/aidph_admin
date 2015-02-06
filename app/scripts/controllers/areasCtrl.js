@@ -163,8 +163,8 @@ var aidphApp = angular.module('aidphApp');
 }]);
 
 
-aidphApp.controller('AreasCreateController', ['$scope', 'Area', 'modalService', '$location', 'Notify', 
-  function ($scope,  Area, modalService, $location, Notify) {
+aidphApp.controller('AreasCreateController', ['$scope', 'Area', 'modalService', '$location', 'Notify', 'logger',
+  function ($scope,  Area, modalService, $location, Notify, logger) {
     var self = this;
     self.areaTypes = ['NATIONAL', 'REGION','PROVINCE', 'CITY', 'BRGY'];
     self.flash = '';
@@ -186,7 +186,8 @@ aidphApp.controller('AreasCreateController', ['$scope', 'Area', 'modalService', 
               console.log(response);
               Notify.sendMsg(response.message, {'id': response.id});
           }, function(errorResponse) {
-              self.flash = errorResponse.data.error.message; 
+            console.log(errorResponse);
+              logger.logError(errorResponse.data.error.message); 
           });
       };
 

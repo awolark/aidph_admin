@@ -4,69 +4,54 @@
 
 angular.module('aidphApp')
  .factory('AuthenticationService', function ($http, $location, SERVER, $sanitize, SessionService, FlashService) {
-    
-    var cacheSession = function(response) {  
-      SessionService.set('authenticated', true);
-      SessionService.set('user_data',JSON.stringify(response.data));
-    };
 
-    var cacheUserData = function(response) {
-    };
-
-
-    var uncacheSession = function() {
-      SessionService.unset('authenticated');
-      SessionService.unset('user_data');   
-      SessionService.unset('lock');         
-    };
-
-    var loginError = function(response) {
-      FlashService.show(response.error.message);
-    };
-
-    var sanitizeCredentials = function(credentials) {
-      return {
-        username: $sanitize(credentials.username),
-        password: $sanitize(credentials.password)
-      };
-    };
-
-    return {
-      login: function(credentials) {
-        var login = $http.post( SERVER + '/auth/login', sanitizeCredentials(credentials));
+      this.login = function(credentials) {
+        var self = this;
+        var login = $http.post( SERVER + '/auth/login', self.sanitizeCredentials(credentials));
        
-        login.success(cacheSession);
+        login.success(self.cacheSession);
         login.success(FlashService.clear);
 
-        login.error(loginError);
+        login.error(function(response) {
+          FlashService.show(response.error.message);
+        });
 
         return login;
-      },
-      logout: function() {
-        var logout = $http.delete(  SERVER + '/auth/logout');
-        logout.success(uncacheSession); 
+      };
+      
+      this.logout = function() {
+        var logout = $http.delete(  SERVER + '/auth/logout'),
+            self = this;
+        logout.success(self.uncacheSession);
         return logout;
-      },
-      isLoggedIn: function() {
+      };
+
+      this.isLoggedIn = function() {
         return SessionService.get('authenticated');
-      },
-      loggedUser: function() {
+      };
+
+      this.loggedUser = function() {
         return JSON.parse(SessionService.get('user_data'));
-      },
-      lockUser: function() {
-        SessionService.set('lock', true);
-      },
-      unlockUser: function(credentials) {
-        var unlock = $http.post( SERVER + '/auth/unlock', credentials);        
-        unlock.success(function() {
-            SessionService.unset('lock');  
-            FlashService.clear();            
-        })
-        .error(function(rejection) {
-          FlashService.show(rejection.data.error);   
-        });
-      }
-    };
+      };
+
+      this.sanitizeCredentials = function(credentials) {
+        return {
+          username: $sanitize(credentials.username),
+          password: $sanitize(credentials.password)
+        };
+      };
+
+      this.cacheSession = function(response) {  
+        SessionService.set('authenticated', true);
+        SessionService.set('user_data',JSON.stringify(response.data));
+      };
+
+      this.uncacheSession = function() {
+        SessionService.unset('authenticated');
+        SessionService.unset('user_data');         
+      };
+
+      return this;
   });
 
 }).call(this);

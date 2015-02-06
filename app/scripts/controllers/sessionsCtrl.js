@@ -48,18 +48,7 @@ angular.module('aidphApp')
               $location.path('/login');
           });
         };
-
-        $scope.lock = function() {
-          AuthenticationService.lockUser();
-          $location.path('/lock');
-        };
-
-        $scope.unlock = function() {
-          var data = $scope.lockdata;
-          data.username =  $rootScope.username;
-          AuthenticationService.unlockUser(data);
-          console.log($scope.data);
-        };
+        
 
       $scope.alert = {
         type: 'danger'

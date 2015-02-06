@@ -45,6 +45,7 @@ angular
            // }
            if(rejection.status === 401) {
              $location.path('/login');
+             
              FlashService.show(rejection.data.error);        
            }
            return $q.reject(rejection);
@@ -54,6 +55,36 @@ angular
 
     $httpProvider.interceptors.push('myHttpInterceptor');
   })
+
+// Route Watcher
+  .run(function($rootScope, $state, $location, AuthenticationService, SessionService, FlashService) {
+
+    var routesThatRequireAuth = ['/', '#/', '/lock', '/areas', '/infrastructures'];
+    var routesThatDoesntRequireAuth = ['/login'];
+
+    $rootScope.$on('$stateChangeStart', function(event, next, current) {
+
+      /* Redirect to login page if user is not logged in */
+
+      if(_(routesThatRequireAuth).contains($location.path()) && !AuthenticationService.isLoggedIn()) {
+        $location.path('/login', {});
+        FlashService.show('Please Login to Continue');
+        return;
+      }
+      
+     
+      /* Redirect to index if user is logged in */
+      
+      if( _(routesThatDoesntRequireAuth).contains($location.path()) && AuthenticationService.isLoggedIn() ) {
+           $location.path('/');
+           return;
+      }
+
+
+    });
+
+  })
+
 
 // Routing
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -68,14 +99,7 @@ angular
         url: '/login',
         templateUrl: 'views/pages/signin.html',
         controller: 'SessionsController'
-      })
-      // Lock
-      .state('lockState', {
-        url: '/lock',
-        templateUrl: 'views/pages/lock-screen.html',
-        controller: 'SessionsController'        
-      })
-      
+      })      
       // Areas
       .state('areasState', {
         url: '/areas',
@@ -106,48 +130,7 @@ angular
 
     $urlRouterProvider.otherwise('/');
   })
-// Routing Ends here
 
-// Route Watcher
-  .run(function($rootScope, $state, $location, AuthenticationService, SessionService, FlashService) {
-
-    var routesThatRequireAuth = ['/', '#/', '/lock', '/areas', '/infrastructures'];
-    var routesThatDoesntRequireAuth = ['/login'];
-
-    $rootScope.$on('$stateChangeStart', function(event, next, current) {
-
-      /* Redirect to login page if user is not logged in */
-
-      if(_(routesThatRequireAuth).contains($location.path()) && !AuthenticationService.isLoggedIn()) {
-        $location.path('/login', {});
-        FlashService.show('Please Login to Continue');
-        return;
-      }
-
-      if(SessionService.get('lock') && AuthenticationService.isLoggedIn()){
-        $location.path('/lock');
-        // logger.log('User is locked');
-      }
-
-
-      /* Redirect to index if user is logged in */
-
-      if(_(routesThatDoesntRequireAuth).contains($location.path()) && AuthenticationService.isLoggedIn()) {
-         $location.path('/');
-         return;
-      }
-
-
-      /* Redirect to login if user */
-
-      // if($location.path() === '/lock' && !AuthenticationService.isLoggedIn()) {
-      //    $location.path('/login');
-      //    return;
-      // }
-
-    });
-
-  })
 
 // Paginator Template Config
   .config(function(paginationTemplateProvider) {

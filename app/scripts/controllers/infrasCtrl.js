@@ -151,22 +151,22 @@ var aidphApp = angular.module('aidphApp');
     };
   
   // watcher for filters
-  $scope.$watch('q', function (key) {
-      var q = null;
-      if (key) {
-          q = {
-              q: key
-          };
-      }
-      $scope.projects = Area.query(q);
-  });
+  // $scope.$watch('q', function (key) {
+  //     var q = null;
+  //     if (key) {
+  //         q = {
+  //             q: key
+  //         };
+  //     }
+  //     $scope.projects = Area.query(q);
+  // });
   
 
-  $scope.find() = function() {
-    $scope.area = Area.get({
-      id: $stateParams.id
-    });
-  };
+  // $scope.find() = function() {
+  //   $scope.area = Area.get({
+  //     id: self.id
+  //   });
+  // };
 
 }]);
 
@@ -237,10 +237,11 @@ aidphApp.controller('InfrasUpdateController', ['$scope', 'Infrastructure', 'logg
     });
 
     self.update =  function(updatedData) { 
+      console.log(updatedData);
       resource.update({id: updatedData.id}, updatedData).$promise.then(function(response){
               logger.logSuccess('Data Successfully Updated');
           }, function(errorResponse) {
-              logger.logWarning(errorResponse.data.error.message); 
+              logger.logError(errorResponse.data.error.message); 
           });
     };
 
