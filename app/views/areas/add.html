@@ -1,0 +1,123 @@
+<div class="modal-content" data-ng-controller="AreasCreateController as areasCreateCtrl">
+  
+  <div class="modal-header dialog-header-confirm">
+    <h4 class="modal-title">
+      <i class="fa fa-floppy-o"></i>  Create Area
+    </h4>
+  </div>
+  
+    <div class="modal-body">
+
+       <form name="createAreaForm" class="form-horizontal form-validation" novalidate>
+
+        <fieldset>
+
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="area">Area Name</label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text"
+              id="area"
+              class="form-control"
+              placeholder="Area Name"
+              data-ng-model="areasCreateCtrl.name"
+              required
+              data-ng-minlength="3"
+              data-ng-maxlength="100">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="type">Type</label>
+            </div>
+            <div class="col-sm-9">
+              <span class="ui-select">
+                <select 
+                required
+                ng-model="areasCreateCtrl.type"
+                ng-init="areasCreateCtrl.areaTypes[0]"
+                ng-options="type for type in areasCreateCtrl.areaTypes">
+                </select>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="contact_person">Contact Person</label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text"
+              id="contact_person"
+              class="form-control"
+              placeholder="Contact Person"
+              data-ng-model="areasCreateCtrl.contact_person"
+              required
+              data-ng-minlength="6"
+              data-ng-maxlength="100">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="contact_no">Contact No.</label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text"
+              id="contact_no"
+              class="form-control"
+              placeholder="Contact No."
+              data-ng-model="areasCreateCtrl.contact_no"
+              required
+              data-min="6"
+              data-max="100">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="parent_area">Parent Area</label>
+            </div>
+            <div class="col-sm-9">
+              <span class="ui-select">
+                <select id="parent_area">
+                  <option>Mustard</option>
+                  <option>Ketchup</option>
+                  <option>Barbecue</option>
+                </select>
+              </span>
+            </div>
+          </div>
+          
+            <div class="form-group">
+            <div class="col-sm-3">
+              <label for="status">Current Status</label>
+            </div>
+            <div class="col-sm-9">
+              <input type="text"
+              id="status"
+              class="form-control"
+              placeholder="Current Status"
+              data-ng-model="areasCreateCtrl.status"
+              data-min="6"
+              data-max="100">
+            </div>
+          </div>
+
+<!--         <section class="row">
+            <alert id="flash" data-ng-show="areasCreateCtrl.flash" type="{{areasCreateCtrl.alert.type}}" close="closeAlert()" >{{ areasCreateCtrl.flash }}</alert>
+        </section> -->
+  
+          <div class="modal-footer">
+                <button type="submit"
+                class="btn btn-success btn-w-lg" data-ng-click="areasCreateCtrl.create(); ok()" >Save</button>
+                <button type="button" class="btn btn-default btn-w-lg" data-ng-click="cancel()">Close</button>    
+          </div>
+
+        </fieldset>
+    </form>
+  </div>
+
+</div>

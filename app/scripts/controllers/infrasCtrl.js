@@ -36,16 +36,20 @@ var aidphApp = angular.module('aidphApp');
       requestData(newPage, self.numPerPage, resolveData);
    };
 
+   self.numPerPageChanged = function() {
+      self.currentPage = 1;
+   };
+
    function requestData(newPage, numPerPage, callback) {
       var params = {page: newPage, limit: numPerPage};
       resource.query(params).$promise.then(callback);
    }
 
    function remove(selectedArea) {
-      var selectedId = selectedArea.id;
+      var id = selectedArea.referenceId;
       
       if(selectedArea) {           
-          resource.delete({id: selectedId}).$promise.then(function(response){
+          resource.delete({id: id}).$promise.then(function(response){
              logger.log('Data Successfully Deleted');              
               
               for (var i in self.data) {
@@ -124,9 +128,8 @@ var aidphApp = angular.module('aidphApp');
 
           $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
-            var data = resource.query({limit: 25}).$promise.then(function(response){
-              self.currentPage = 1;
-              data = response.data;
+            var data = resource.query({limit: self.numPerPage, page: self.currentPage}).$promise.then(function(response){
+              self.data = response.data;
             });
           };
 
@@ -176,8 +179,8 @@ var aidphApp = angular.module('aidphApp');
 
 
 // REPLACE
-aidphApp.controller('InfrasCreateController', ['$scope', 'Infrastructure', 'modalService', '$location', 'Notify', 'Area', 'AreaHelper',
-  function ($scope,  Infrastructure, modalService, $location, Notify, Area, AreaHelper) {
+aidphApp.controller('InfrasCreateController', ['$scope', 'Infrastructure', 'modalService', '$location', 'Notify', 'Area', 'AreaHelper', 'logger',
+  function ($scope,  Infrastructure, modalService, $location, Notify, Area, AreaHelper, logger) {
     var self = this;
     self.flash = '';
     self.types = ['BRIDGE', 'BUILDING', 'DAM'];
@@ -202,11 +205,9 @@ aidphApp.controller('InfrasCreateController', ['$scope', 'Infrastructure', 'moda
             // bounds: this.name,
             // parent_id: self.parent_id,
           });
-          
-          console.log(data);
 
           data = resource.save(data).$promise.then(function(response){
-              console.log(response);
+              logger.logSuccess(response.message);
               Notify.sendMsg(response.message, {'id': response.id});
           }, function(errorResponse) {
               self.flash = errorResponse.data.error.message; 

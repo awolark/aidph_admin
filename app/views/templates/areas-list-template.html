@@ -45,11 +45,11 @@
     <tbody>
       <tr dir-paginate="area in areasCtrl.areas | filter: q | itemsPerPage: areasCtrl.numPerPage"
       total-items="areasCtrl.totalData" current-page="areasCtrl.currentPage">
-        <td>{{area.name}}</td>
-        <td>{{area.type}}</td>
-        <td>{{area.contact_person}}</td>
-        <td>{{area.contact_no}}</td>
-        <td>
+        <td ng-animate="'animate'">{{area.name}}</td>
+        <td ng-animate="'animate'">{{area.type}}</td>
+        <td ng-animate="'animate'">{{area.contact_person}}</td>
+        <td ng-animate="'animate'">{{area.contact_no}}</td>
+        <td ng-animate="'animate'">
            <a href="javascript:;" class="btn-icon btn-icon-sm bg-success"><i class="fa fa-map-marker" tooltip-placement="top" tooltip="View on Map" tooltip-append-to-body="true"></i></a>
 
            <a data-ng-click="areasCtrl.modalUpdate(area)" href="javascript:;" class="btn-icon btn-icon-sm bg-info"><i class="fa fa-pencil-square-o" tooltip-placement="top" tooltip="Update" tooltip-append-to-body="true"></i></a>

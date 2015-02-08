@@ -8,7 +8,7 @@ angular.module('aidphApp')
     return $resource( SERVER + '/areas/:id', {id: '@id'}, 
     	{
     		'query': {method: 'GET', 'params': {'page': 1}, isArray: false},
-    		'update': {method: 'POST', 'params': { id: '@id'} }
+    		'update': {method: 'PUT', 'params': { id: '@id'} }
     	});	
 
   }])

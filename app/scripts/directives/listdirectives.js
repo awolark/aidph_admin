@@ -14,13 +14,12 @@ angular.module('aidphApp')
       	//when a new customer is added refresh the list
       	      	
       	Notify.getMsg('Area successfully created', function(event, data) {
-      		
-      		logger.logSuccess('Area successfully created');
-      	
-      		Area.query({limit: 25}).$promise.then(function(response){
+      		      	
+      		Area.query({limit: scope.areasCtrl.numPerPage, page: scope.areasCtrl.currentPage}).$promise.then(function(response){
       				scope.areasCtrl.areas = response.data;	
       				scope.areasCtrl.totalData = response.meta.pagination.total;
       		});
+          
       	});
       }
     };
@@ -37,13 +36,12 @@ angular.module('aidphApp')
         //when a new customer is added refresh the list
                 
         Notify.getMsg('Infrastructure successfully created', function(event, data) {
-          
-          logger.logSuccess('Infrastructure successfully created');
-        
-          Infrastructure.query({limit: 25}).$promise.then(function(response){
+                
+          Infrastructure.query({limit: scope.infrasCtrl.numPerPage, page: scope.infrasCtrl.currentPage}).$promise.then(function(response){
               scope.infrasCtrl.data = response.data;  
               scope.infrasCtrl.totalData = response.meta.pagination.total;
           });
+        
         });
       }
     };

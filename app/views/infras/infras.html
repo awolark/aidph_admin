@@ -44,7 +44,8 @@
         <span>
           Show 
           <select data-ng-model="infrasCtrl.numPerPage"
-          data-ng-options="num for num in infrasCtrl.numPerPageOpt">
+          data-ng-options="num for num in infrasCtrl.numPerPageOpt"
+          data-ng-change="infrasCtrl.numPerPageChanged()">
         </select> 
         Entries per page
       </span>
