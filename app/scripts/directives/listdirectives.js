@@ -37,9 +37,30 @@ angular.module('aidphApp')
                 
         Notify.getMsg('Infrastructure successfully created', function(event, data) {
                 
-          Infrastructure.query({limit: scope.infrasCtrl.numPerPage, page: scope.infrasCtrl.currentPage}).$promise.then(function(response){
-              scope.infrasCtrl.data = response.data;  
-              scope.infrasCtrl.totalData = response.meta.pagination.total;
+          Infrastructure.query({limit: scope.usersCtrl.numPerPage, page: scope.usersCtrl.currentPage}).$promise.then(function(response){
+              scope.usersCtrl.data = response.data;  
+              scope.usersCtrl.totalData = response.meta.pagination.total;
+          });
+        
+        });
+      }
+    };
+  }])
+
+  .directive('usersList', ['User', 'Notify', 'logger', function (User, Notify, logger) {
+    return {
+      templateUrl: 'views/templates/users-list-template.html',
+      restrict: 'E',
+      transclude: true,
+      link: function(scope, element, attrs) {
+        
+        //when a new customer is added refresh the list
+                
+        Notify.getMsg('User successfully created', function(event, data) {
+                
+          Infrastructure.query({limit: scope.usersCtrl.numPerPage, page: scope.usersCtrl.currentPage}).$promise.then(function(response){
+              scope.usersCtrl.data = response.data;  
+              scope.usersCtrl.totalData = response.meta.pagination.total;
           });
         
         });

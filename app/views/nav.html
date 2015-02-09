@@ -9,7 +9,7 @@
         <li>
             <a href="#/ui"><i class="fa fa-bar-chart-o fa-fw"></i><span>Information Mgmt</span></a>
             <ul>
-                <li><a href="#/ui/buttons"><i class="fa fa-caret-right"></i><span>Accounts</span></a></li>
+                <li><a ui-sref="usersState"><i class="fa fa-caret-right"></i><span>Users</span></a></li>
                 <li><a ui-sref="areasState"><i class="fa fa-caret-right"></i><span>Areas</span></a></li>
                 <li><a href="#/ui/widgets"><i class="fa fa-caret-right"></i><span>Households</span> <span class="badge badge-success">13</span></a></li>
                 <li><a href="#/ui/grids"><i class="fa fa-caret-right"></i><span>Persons</span></a></li>
@@ -20,54 +20,36 @@
 
 
         <li>
-            <a href="#/pages" tooltip-placement="right" tooltip="Prevention & Mitigation" tooltip-append-to-body="true"><i class="fa fa-sitemap fa-fw"></i><span>Prevention & Mitig..</span></a>
+            <a href="#/pages" tooltip-placement="right" tooltip="Prevention & Mitigation" tooltip-append-to-body="true"><i class="fa fa-exclamation-triangle"></i><span>Prevention & Mitig..</span></a>
             <ul>
-                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span>Prevention & Mitigation</span></a></li>                
+                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span>Hazard Incident &</span><br/><span>Risk Analysis Mgmt</span></a></li>                
 
-                <li><a href="#/pages/signup"><i class="fa fa-caret-right"></i><span>Preparedness</span></a></li>
+                <li><a href="#/pages/signup"><i class="fa fa-caret-right"></i><span>Advisories Management</span></a></li>
 
-                <li><a href="#/pages/forgot"><i class="fa fa-caret-right"></i><span>Response</span></a></li>
-
-                <li><a href="#/pages/lock-screen"><i class="fa fa-caret-right"></i><span>Rehabilitation & Recovery</span></a></li>
+                <li><a href="#/pages/forgot"><i class="fa fa-caret-right"></i><span>Information Campaign</span></a></li>
             </ul>
         </li>
         
         <li>
-            <a href="#/pages"><i class="fa fa-sitemap fa-fw"></i><span>Preparedness</span></a>
+            <a href="#/pages"><i class="fa fa-medkit"></i><span>Preparedness</span></a>
             <ul>
-                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span>Prevention & Mitigation</span></a></li>                
-
-                <li><a href="#/pages/signup"><i class="fa fa-caret-right"></i><span>Preparedness</span></a></li>
-
-                <li><a href="#/pages/forgot"><i class="fa fa-caret-right"></i><span>Response</span></a></li>
-
-                <li><a href="#/pages/lock-screen"><i class="fa fa-caret-right"></i><span>Rehabilitation & Recovery</span></a></li>
+                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span>Vulnerable Sectors</span><br/><span>Analysis</span></a></li>   
             </ul>
         </li>
 
         <li>
-            <a href="#/pages"><i class="fa fa-sitemap fa-fw"></i><span>Response</span></a>
+            <a href="#/pages"><i class="fa fa-users"></i><span>Response</span></a>
             <ul>
-                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span data-i18n="Prevention & Mitigation"></span></a></li>                
+                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span>Disaster Management</span></a></li>                
 
-                <li><a href="#/pages/signup"><i class="fa fa-caret-right"></i><span data-i18n="Preparedness"></span></a></li>
-
-                <li><a href="#/pages/forgot"><i class="fa fa-caret-right"></i><span data-i18n="Response"></span></a></li>
-
-                <li><a href="#/pages/lock-screen"><i class="fa fa-caret-right"></i><span data-i18n="Rehabilitation & Recovery"></span></a></li>
+                <li><a href="#/pages/forgot"><i class="fa fa-caret-right"></i><span>Evacuation Center</span><br/><span>Management</span></a></li>
             </ul>
         </li>
 
         <li>
-            <a href="#/pages" tooltip-placement="right" tooltip="Rehabilitation & Recovery" tooltip-append-to-body="true"><i class="fa fa-sitemap fa-fw"></i><span>Rehabilitation & Recov..</span></a>
+            <a href="#/pages" tooltip-placement="right" tooltip="Rehabilitation & Recovery" tooltip-append-to-body="true"><i class="fa fa-life-ring"></i><span>Rehabilitation & Recov..</span></a>
             <ul>
-                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span data-i18n="Prevention & Mitigation"></span></a></li>                
-
-                <li><a href="#/pages/signup"><i class="fa fa-caret-right"></i><span data-i18n="Preparedness"></span></a></li>
-
-                <li><a href="#/pages/forgot"><i class="fa fa-caret-right"></i><span data-i18n="Response"></span></a></li>
-
-                <li><a href="#/pages/lock-screen"><i class="fa fa-caret-right"></i><span data-i18n="Rehabilitation & Recovery"></span></a></li>
+                <li><a href="#/pages/signin"><i class="fa fa-caret-right"></i><span>PDNA Report</span></a></li>  
             </ul>
         </li>
 
@@ -83,12 +65,13 @@
             </ul>
         </li>
         <li>
-            <a href="#/form"><i class="fa fa-files-o fa-fw"></i><span>Disaster Assessment</span></a>
+            <a href="#/form"><i class="fa fa-file-text"></i><span>Assessment Reports</span></a>
             <ul>
+                <li><a href="#/pages/signup"><i class="fa fa-caret-right"></i><span>Situation Report</span></a></li>
                 <li><a href="#/forms/elements"><i class="fa fa-caret-right"></i><span></span>Damages<span class="badge badge-warning">14</span></a></li>
                 <li><a href="#/forms/validation"><i class="fa fa-caret-right"></i><span>Victims Master List</span></a></li>
                 <li><a href="#/forms/wizard"><i class="fa fa-caret-right"></i><span>Needs Report</span></a></li>
-                <li><a href="#/forms/wizard"><i class="fa fa-caret-right"></i><span>PDNA Report</span></a></li>
+                <li><a href="#/forms/wizard" tooltip-placement="right" tooltip="Post Disaster Needs Assessment Report" tooltip-append-to-body="true"><i class="fa fa-caret-right" ></i><span>PDNA Report</span></a></li>
             </ul>
         </li>
 

@@ -1,0 +1,75 @@
+   <table class="table table-bordered table-striped table-responsive">
+    <thead>
+      <tr>
+        <th width="10%"><div class="th">
+          User
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('username') "
+          data-ng-class="{active: row == 'username'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-area_username') "
+          data-ng-class="{active: row == '-username'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Role
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('role') "
+          data-ng-class="{active: row == 'role'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-role') "
+          data-ng-class="{active: row == '-role'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Status
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('email') "
+          data-ng-class="{active: row == 'email'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-email') "
+          data-ng-class="{active: row == '-email'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Email Address
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('email') "
+          data-ng-class="{active: row == 'email'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-email') "
+          data-ng-class="{active: row == '-email'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Action
+        </div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr dir-paginate="item in usersCtrl.data | filter: q | itemsPerPage: usersCtrl.numPerPage"
+      total-items="usersCtrl.totalData" current-page="usersCtrl.currentPage"
+      >
+      <!-- data-ng-if="usersCtrl.loggedUser.i" -->
+        <td width="30%">
+        	<a href="javascript:;"><img class="pull-left table_img img-circle img30_30" data-ng-src="{{item.image_path}}" style="margin-right:20px"></a>
+          {{item.username}}
+        </td>
+        <td width="10%" class="centered-text">
+          <span class="label label-info" data-ng-if="item.role === 1">Admin</span>
+          <span class="label label-default" data-ng-if="item.role === 2">User</span>
+        </td>
+        <td width="10%" class="td-icons">
+          <span data-ng-if="item.recstat==='A'"  class="label label-success" tooltip-placement="top" tooltip="Activated" tooltip-append-to-body="true">Activated</span>
+          <span data-ng-if="item.recstat==='I'"  class="label label-warning" tooltip-placement="top" tooltip="Email needs confirmation" tooltip-append-to-body="true">Pending</span>
+          <span data-ng-if="item.recstat==='X'"  class="label label-danger" tooltip-placement="top" tooltip="Account deactivated" tooltip-append-to-body="true">Deactivated</span>
+        </td>
+
+        <td width="25%">
+          <a href="javascript:;"><i>{{item.email}}</i></a>
+          <a href="javascript:;" data-ng-click="usersCtrl.resendEmail(item)" tooltip-placement="top" tooltip="Resend Mail" tooltip-append-to-body="true" data-ng-if="item.recstat==='I'"><i class="pull-right fa fa-refresh text-primary" style="font-size:1.5em;"></i></a>          
+        </td>
+        <td width="15%" style="centered-text">
+<!--            <a data-ng-click="usersCtrl.modalUpdate(item)" href="javascript:;" class="btn-icon btn-icon-sm bg-info"><i class="fa fa-pencil-square-o" tooltip-placement="top" tooltip="Update" tooltip-append-to-body="true"></i></a> -->
+           
+           <a data-ng-click="usersCtrl.modalRemove(item)" href="javascript:;" class="btn-icon btn-icon-sm bg-danger"><i class="fa fa-trash" tooltip-placement="top" tooltip="Delete" tooltip-append-to-body="true"></i></a>
+        </td>
+      </tr> 
+ </tbody>
+</table>

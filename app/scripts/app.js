@@ -39,10 +39,7 @@ angular
            return response;
          },
          'responseError': function(rejection) {
-           // if(rejection.status === 401 && SessionService.get('lock')){
-           //   $location.path('/lock');
-           //   logger.log('User is locked');
-           // }
+
            if(rejection.status === 401) {
              $location.path('/login');
              
@@ -113,7 +110,19 @@ angular
           }
         }
       })
-
+      // Users
+      .state('usersState', {
+        url: '/users',
+        templateUrl: 'views/users/users.html',
+        controller: 'UsersController',
+        controllerAs: 'usersCtrl',
+        resolve: {
+          usersService: 'User',
+          responseData: function(usersService, AuthenticationService) {
+            return usersService.query({limit: 25, loggedUserId: AuthenticationService.loggedUser().user_id}).$promise;
+          }
+        }
+      })
       // Infrastructures
       .state('infrasState', {
         url: '/infras',

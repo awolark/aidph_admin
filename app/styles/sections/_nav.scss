@@ -148,7 +148,15 @@ $link_active_bg:        $skin;
                     right: 5px;
                     top: 12px;
                 }
+
+                span:nth-of-type(2) {
+                    padding-left:30px;
+                }
+
             }
+
         }
     }
 }
+
+

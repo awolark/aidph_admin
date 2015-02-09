@@ -12,8 +12,7 @@
 <div class="page page-table">
 
   <section class="panel panel-default table-dynamic">
-    <div class="panel-heading"><strong><i class="fa fa-building"></i> Manage Infrastructures </strong></div>
-
+    <div class="panel-heading"><strong><i class="fa fa-user"></i> Manage Users </strong></div>
 
     <div class="table-filters">
       <div class="row">
@@ -23,19 +22,19 @@
             placeholder="search"
             class="form-control"
             data-ng-model="q"
-            data-ng-keyup="infrasCtrl.search()">
+            data-ng-keyup="usersCtrl.search()">
           </form>
         </div>
 
         <div class="col-sm-2 pull-right tbl-add-btn-wrap">
-         <button data-ng-click="infrasCtrl.modalCreate()" class="btn btn-w-lg btn-success btn-gap data-ng-scope">New</button>
+         <button data-ng-click="usersCtrl.modalCreate()" class="btn btn-w-lg btn-success btn-gap data-ng-scope">New</button>
        </div>
 
      </div>   
    </div>
 
 
-<infras-list></infras-list>
+<users-list></users-list>
 
 
 <footer class="table-footer">
@@ -43,16 +42,16 @@
       <div class="col-md-6 page-num-info">
         <span>
           Show 
-          <select data-ng-model="infrasCtrl.numPerPage"
-          data-ng-options="num for num in infrasCtrl.numPerPageOpt"
-          data-ng-change="infrasCtrl.numPerPageChanged()">
+          <select data-ng-model="usersCtrl.numPerPage"
+          data-ng-options="num for num in usersCtrl.numPerPageOpt"
+          data-ng-change="usersCtrl.numPerPageChanged()">
         </select> 
         Entries per page
       </span>
     </div>
 
     <div class="col-md-6 text-right pagination-container">
-      <dir-pagination-controls boundary-links="true" max-size="6" on-page-change="infrasCtrl.pageChanged(newPageNumber)"></dir-pagination-controls>
+      <dir-pagination-controls boundary-links="true" max-size="6" on-page-change="usersCtrl.pageChanged(newPageNumber)"></dir-pagination-controls>
     </div> 
   </div>
 </footer>

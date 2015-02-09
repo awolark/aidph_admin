@@ -14,7 +14,7 @@ angular.module('aidphApp')
       
       return $scope.main = {
         brand: APP_NAME,
-        name: 'Wayne Abarquez'
+        name: ''
       };
 
     }

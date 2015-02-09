@@ -69,3 +69,37 @@
         }
     }
 }
+
+table tbody {
+    tr {
+        td{
+          img {
+            width: 30px;
+            height: auto;
+          } 
+
+        }
+    }
+}
+
+
+    td.td-icons {
+        text-align: center;
+        
+        i {
+            font-size: 2em;
+        }
+    }
+
+    .activated {
+      color: $brand-success;
+      
+    }
+
+    .deactivated {
+      color: $brand-danger;
+    }
+
+    .inactive {
+      color: $brand-warning;
+    }
