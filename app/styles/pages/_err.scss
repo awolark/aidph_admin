@@ -8,7 +8,7 @@
     .err-container {
         width: 100%;
         height: 75%;
-        background-color: $brand-primary;
+        background-color: $skin;
         border-bottom: 1px solid darken($brand-primary, 5%);
         padding: 45px 0 0;
         @media (min-width:$screen-sm) {
@@ -26,7 +26,7 @@
         }
     }
     .err-message {
-        background-color: $brand-primary;
+        background-color: $skin;
         padding: 24px;
         text-transform: uppercase;
         h2 {
@@ -52,12 +52,12 @@
         &:focus,
         &:active,
         &.active {
-            color: lighten($brand-primary, 5%);
+            color: lighten($skin, 5%);
             background-color: $reverse;
         }
         .open & {
             &.dropdown-toggle {
-                color: lighten($brand-primary, 5%);
+                color: lighten($skin, 5%);
                 background-color: $reverse;
             }
         }

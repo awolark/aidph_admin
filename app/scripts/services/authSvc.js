@@ -3,7 +3,8 @@
 'use strict';  
 
 angular.module('aidphApp')
- .factory('AuthenticationService', function ($http, $location, SERVER, $sanitize, SessionService, FlashService) {
+ .factory('AuthenticationService', 
+    function ($http, $location, SERVER, $sanitize, SessionService, FlashService, UserHelper) {
 
       this.login = function(credentials) {
         var self = this;
@@ -32,6 +33,12 @@ angular.module('aidphApp')
 
       this.loggedUser = function() {
         return JSON.parse(SessionService.get('user_data'));
+      };
+
+      this.getLoggedUserAreas = function() {
+        var userId = this.loggedUser().user_id;
+
+        return UserHelper.getAreasForUser(userId);
       };
 
       this.sanitizeCredentials = function(credentials) {

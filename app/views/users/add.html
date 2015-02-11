@@ -1,0 +1,68 @@
+<div class="modal-content" data-ng-controller="UsersCreateController as usersCreateCtrl">
+  
+  <div class="modal-header dialog-header-confirm">
+    <h4 class="modal-title">
+      <i class="fa fa-floppy-o"></i>  Create User
+    </h4>
+  </div>
+  
+    <div class="modal-body" data-ng-init="usersCreateCtrl.getLoggedUserAreas()">
+
+       <form name="createUsersForm" class="form-horizontal form-validation" novalidate>
+
+        <fieldset>
+
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="email">Email</label>
+            </div>
+            <div class="col-sm-9">
+              <input 
+              type="email"
+              name="email"
+              id="email"
+              class="form-control"
+              placeholder="Required"
+              data-ng-model="usersCreateCtrl.email"
+              required>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="area_id">Select Area For User</label>
+            </div>
+            <div class="col-sm-9">
+              <span class="ui-select">
+                <select 
+                id="area_id"
+                data-ng-model="usersCreateCtrl.selectedAreaId"
+                data-ng-options="area.id as (area.name + ' ' + area.type) for area in usersCreateCtrl.loggedUserAreas"
+                required>                
+                </select>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-3">
+              <label for="email">Role</label>
+            </div>
+            <div class="col-sm-9">
+                <div class="btn-group">
+                  <button type="button" data-ng-model="usersCreateCtrl.selectedRole" data-ng-required="!usersCreateCtrl.selectedRole" data-ng-click="usersCreateCtrl.selectRole(role)" class="btn btn-line-success" data-ng-repeat="role in usersCreateCtrl.roles"> {{role.name}} </button>
+               </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+                <button name="submit"
+                class="btn btn-success btn-w-lg" data-ng-disabled="createUsersForm.$invalid" data-ng-click="usersCreateCtrl.create(); ok()" >Save</button>
+                <button name="button" class="btn btn-default btn-w-lg" data-ng-click="cancel()">Close</button>    
+          </div>
+
+        </fieldset>
+    </form>
+  </div>
+
+</div>

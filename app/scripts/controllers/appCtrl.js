@@ -9,7 +9,7 @@ angular.module('aidphApp')
       $scope.isSpecificPage = function() {
         var path;
         path = $location.path();
-        return _.contains(['/404', '/pages/500', '/login', '/lock'], path);
+        return _.contains(['/404', '/login'], path);
       };
       
       return $scope.main = {

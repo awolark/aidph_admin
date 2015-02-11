@@ -30,36 +30,59 @@ angular
   ])
    .constant('APP_NAME', '#aidPH')
    .constant('SERVER', 'http://api.aidph.dev:80')
-   
+
    .config(function($provide, $httpProvider) {
-     $provide.factory('myHttpInterceptor',
-      function ($q, $location, SessionService, FlashService, logger) { 
-       return {
-         'response': function(response) {
-           return response;
-         },
-         'responseError': function(rejection) {
 
-           if(rejection.status === 401) {
-             $location.path('/login');
-             
-             FlashService.show(rejection.data.error);        
+      $httpProvider.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+
+       $provide.factory('myHttpInterceptor',
+        function ($q, $location, $rootScope, SessionService, logger) { 
+         return {
+           'response': function(response) {
+             $rootScope.$broadcast('loader_hide');
+
+             return response || $q.when(response);
+           },
+           'responseError': function(rejection) {
+             $rootScope.$broadcast('loader_hide');
+
+             if(rejection.status === 401) {
+               $location.path('/login');
+               
+               logger.logFail(rejection.data.error);        
+             }
+             // else if(rejection.status === 404) {
+             //    $location.path('/404');
+             // }
+             return $q.reject(rejection);
+           },
+           'request': function(config) {
+              /* Start loading animation */
+              $rootScope.$broadcast('loader_show');
+              return config  || $q.when(config);
+           },
+           'requestError' : function(rejection) {
+              $rootScope.$broadcast('loader_hide');
+
+              return $q.reject(rejection);
            }
-           return $q.reject(rejection);
-         }
-       };
-     });
+         };
+       });
 
-    $httpProvider.interceptors.push('myHttpInterceptor');
+      $httpProvider.interceptors.push('myHttpInterceptor');
   })
 
-// Route Watcher
+  /* Route Watcher */ 
+  
   .run(function($rootScope, $state, $location, AuthenticationService, SessionService, FlashService) {
 
-    var routesThatRequireAuth = ['/', '#/', '/lock', '/areas', '/infrastructures'];
+    var routesThatRequireAuth = ['/', '#/', '/areas', '/users', '/infrastructures', '/households'];
     var routesThatDoesntRequireAuth = ['/login'];
 
     $rootScope.$on('$stateChangeStart', function(event, next, current) {
+
+      /* Restart loading animation */
+      Pace.restart();
 
       /* Redirect to login page if user is not logged in */
 
@@ -69,14 +92,11 @@ angular
         return;
       }
       
-     
       /* Redirect to index if user is logged in */
-      
       if( _(routesThatDoesntRequireAuth).contains($location.path()) && AuthenticationService.isLoggedIn() ) {
            $location.path('/');
            return;
       }
-
 
     });
 
@@ -97,6 +117,7 @@ angular
         templateUrl: 'views/pages/signin.html',
         controller: 'SessionsController'
       })      
+
       // Areas
       .state('areasState', {
         url: '/areas',
@@ -105,8 +126,8 @@ angular
         controllerAs: 'areasCtrl',
         resolve: {
           areasService: 'Area',
-          areaData: function(areasService) {
-            return areasService.query({limit: 25}).$promise;
+          areaData: function(areasService, AuthenticationService) {
+            return areasService.query({limit: 25, loggedUserId: AuthenticationService.loggedUser().user_id}).$promise;
           }
         }
       })
@@ -123,6 +144,21 @@ angular
           }
         }
       })
+
+      // Infrastructures
+      .state('householdsState', {
+        url: '/households',
+        templateUrl: 'views/households/households.html',
+        controller: 'HouseholdsController',
+        controllerAs: 'hhCtrl',
+        resolve: {
+          householdService: 'Household',
+          responseData: function(householdService, AuthenticationService) {
+            return householdService.query({limit: 25, loggedUserId: AuthenticationService.loggedUser().user_id}).$promise;
+          }
+        }
+      })
+
       // Infrastructures
       .state('infrasState', {
         url: '/infras',
@@ -131,13 +167,18 @@ angular
         controllerAs: 'infrasCtrl',
         resolve: {
           infrasService: 'Infrastructure',
-          responseData: function(infrasService) {
-            return infrasService.query({limit: 25}).$promise;
+          responseData: function(infrasService, AuthenticationService) {
+            return infrasService.query({limit: 25, loggedUserId: AuthenticationService.loggedUser().user_id}).$promise;
           }
         }
+      })
+
+      .state('pageNotFoundState', {
+        url: '/404',
+        templateUrl: 'views/pages/404.html'
       });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/404');
   })
 
 

@@ -1,12 +1,12 @@
-<div class="modal-content" data-ng-controller="InfrasCreateController as infrasCreateCtrl">
+<div class="modal-content" data-ng-controller="HouseholdsCreateController as hhCreateController">
   
   <div class="modal-header dialog-header-confirm">
     <h4 class="modal-title">
-      <i class="fa fa-floppy-o"></i>  Create Infrastructure
+      <i class="fa fa-floppy-o"></i>  Create Household
     </h4>
   </div>
   
-    <div class="modal-body">
+    <div class="modal-body" data-ng-init="hhCreateController.getBrgys()">
 
        <form name="createInfraForm" class="form-horizontal form-validation" novalidate>
 
@@ -14,14 +14,14 @@
 
           <div class="form-group">
             <div class="col-sm-3">
-              <label for="area">Infrastructure Name</label>
+              <label for="area">Household Name</label>
             </div>
             <div class="col-sm-9">
               <input type="text"
               id="name"
               class="form-control"
-              placeholder="Infrastructure Name"
-              data-ng-model="infrasCreateCtrl.name"
+              placeholder="Household Name"
+              data-ng-model="hhCreateController.name"
               required
               data-ng-minlength="3"
               data-ng-maxlength="100">
@@ -35,9 +35,9 @@
             <div class="col-sm-9">
               <span class="ui-select">
                 <select 
-                ng-model="infrasCreateCtrl.type"
-                ng-init="infrasCreateCtrl.types[0]"
-                ng-options="type for type in infrasCreateCtrl.types">
+                ng-model="hhCreateController.type"
+                ng-init="hhCreateController.types[0]"
+                ng-options="type for type in hhCreateController.types">
                 </select>
               </span>
             </div>
@@ -50,9 +50,9 @@
             <div class="col-sm-9">
               <span class="ui-select">
                 <select 
-                ng-model="infrasCreateCtrl.brgy_area_id"
-                ng-init="infrasCreateCtrl.types[0]"
-                ng-options="brgy.id as brgy.name for brgy in infrasCreateCtrl.brgys">
+                ng-model="hhCreateController.brgy_area_id"
+                ng-init="hhCreateController.types[0]"
+                ng-options="brgy.id as brgy.name for brgy in hhCreateController.brgys">
                 </select>
               </span>
             </div>
@@ -67,7 +67,7 @@
               id="location"
               class="form-control"
               placeholder="Location"
-              data-ng-model="infrasCreateCtrl.location"
+              data-ng-model="hhCreateController.location"
               required
               data-ng-minlength="6"
               data-ng-maxlength="100">
@@ -83,7 +83,7 @@
               id="remarks"
               class="form-control"
               placeholder="Remarks"
-              data-ng-model="infrasCreateCtrl.remarks"
+              data-ng-model="hhCreateController.remarks"
               rows="5"
               cols="10">
             </textarea>
@@ -99,19 +99,19 @@
               id="status"
               class="form-control"
               placeholder="Current Status"
-              data-ng-model="infrasCreateCtrl.status"
+              data-ng-model="hhCreateController.status"
               data-min="6"
               data-max="100">
             </div>
           </div>
 
 <!--         <section class="row">
-            <alert id="flash" data-ng-show="infrasCreateCtrl.flash" type="{{infrasCreateCtrl.alert.type}}" close="closeAlert()" >{{ infrasCreateCtrl.flash }}</alert>
+            <alert id="flash" data-ng-show="hhCreateController.flash" type="{{hhCreateController.alert.type}}" close="closeAlert()" >{{ hhCreateController.flash }}</alert>
         </section> -->
   
           <div class="modal-footer">
                 <button type="submit"
-                class="btn btn-success btn-w-lg" data-ng-click="infrasCreateCtrl.create(); ok()" data-ng-disabled="createInfraForm.$invalid">Save</button>
+                class="btn btn-success btn-w-lg" data-ng-click="hhCreateController.create(); ok()" data-ng-disabled="createInfraForm.$invalid">Save</button>
                 <button type="button" class="btn btn-default btn-w-lg" data-ng-click="cancel()">Close</button>    
           </div>
 

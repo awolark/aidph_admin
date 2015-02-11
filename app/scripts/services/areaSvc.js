@@ -7,18 +7,19 @@ angular.module('aidphApp')
  .factory('Area', ['$resource', 'SERVER', function($resource, SERVER) {
     return $resource( SERVER + '/areas/:id', {id: '@id'}, 
     	{
-    		'query': {method: 'GET', 'params': {'page': 1}, isArray: false},
-    		'update': {method: 'POST', 'params': { id: '@id'} }
+    		'update': {method: 'PUT'},
+    		'query': {method: 'GET', 'params': {'page': 1}, isArray: false}
     	});	
 
   }])
 
- .factory('AreaHelper', ['$http', 'SERVER', function ($http, SERVER) {
+ .factory('AreaHelper', ['$http', 'SERVER', 'AuthenticationService', 
+ 	function ($http, SERVER, AuthenticationService) {
  	return {
  		getBrgys: function() {
  			return $http.get(SERVER + '/areas/barangays');
- 		}
- 	};
+ 		};
+ 	}
  }]);
 
 }).call(this);

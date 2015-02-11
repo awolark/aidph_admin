@@ -1,0 +1,67 @@
+   <table class="table table-bordered table-striped table-responsive">
+    <thead>
+      <tr>
+        <th width="10%"><div class="th">
+          Household Head  
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('hh_head') "
+          data-ng-class="{active: row == 'hh_head'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-hh_head') "
+          data-ng-class="{active: row == '-hh_head'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Barangay
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('brgy_name') "
+          data-ng-class="{active: row == 'brgy_name'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-brgy_name') "
+          data-ng-class="{active: row == '-brgy_name'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Address
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('address') "
+          data-ng-class="{active: row == 'address'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-address') "
+          data-ng-class="{active: row == '-address'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Status
+          <span class="glyphicon glyphicon-chevron-up"
+          data-ng-click="order('status') "
+          data-ng-class="{active: row == 'status'}"></span>
+          <span class="glyphicon glyphicon-chevron-down"
+          data-ng-click="order('-status') "
+          data-ng-class="{active: row == '-status'}"></span>
+        </div></th>
+        <th width="10%"><div class="th">
+          Action
+        </div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr dir-paginate="item in hhCtrl.data | filter: q | itemsPerPage: hhCtrl.numPerPage"
+      total-items="hhCtrl.totalData" current-page="hhCtrl.currentPage">
+        <td width="15%">
+          <span data-ng-if="item.head_name === ''" class="label label-default">N/A</span>
+          <span data-ng-if="item.head_name">{{item.head_name}}</span>  
+        </td>
+        <td width="10%">{{item.brgy_name}}</td>
+        <td width="30%">{{item.address}}</td>
+        <td width="5%">
+          <span ng-if="item.status === 'OK'" class="label label-success">{{item.status}}</span>
+          <span ng-if="item.status !== 'OK'" class="label label-warning">{{item.status}}</span>
+        </td>
+        <td width="15%">
+           <a href="javascript:;" class="btn-icon btn-icon-sm bg-success"><i class="fa fa-map-marker" tooltip-placement="top" tooltip="View on Map" tooltip-append-to-body="true"></i></a>
+
+           <a data-ng-click="hhCtrl.modalUpdate(item)" href="javascript:;" class="btn-icon btn-icon-sm bg-info"><i class="fa fa-pencil-square-o" tooltip-placement="top" tooltip="Update" tooltip-append-to-body="true"></i></a>
+           
+           <a data-ng-click="hhCtrl.modalRemove(item)" href="javascript:;" class="btn-icon btn-icon-sm bg-danger"><i class="fa fa-trash" tooltip-placement="top" tooltip="Delete" tooltip-append-to-body="true"></i></a>
+        </td>
+      </tr> 
+ </tbody>
+</table>

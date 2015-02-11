@@ -27,8 +27,8 @@
             switch (path) {
               case '/':
                 return $element.addClass('body-home');
-              //case '/404':
               //case '/pages/500':
+              case '/404':
               case '/login':
                 return $element.addClass('body-special');
               case '/lock':

@@ -1,0 +1,62 @@
+
+<!-- breadcrumbs -->
+<div class="panel-body breadcrumb-container">
+  <ol class="breadcrumb">
+    <li><a href="javascript:;">Home</a></li>
+    <li><a href="javascript:;">Library</a></li>
+    <li class="active">Data</li>
+  </ol>  
+</div>
+<!-- breadcrumbs -->
+
+<div class="page page-table">
+
+  <section class="panel panel-default table-dynamic">
+    <div class="panel-heading"><strong><i class="fa fa-users"></i> Manage Households </strong></div>
+
+
+    <div class="table-filters">
+      <div class="row">
+        <div class="col-sm-4 col-xs-6">
+          <form>
+            <input type="text"
+            placeholder="search"
+            class="form-control"
+            data-ng-model="q"
+            data-ng-keyup="hhCtrl.search()">
+          </form>
+        </div>
+
+        <div class="col-sm-2 pull-right tbl-add-btn-wrap">
+         <button data-ng-click="hhCtrl.modalCreate()" class="btn btn-w-lg btn-success btn-gap data-ng-scope">New</button>
+       </div>
+
+     </div>   
+   </div>
+
+
+<households-list></households-list>
+
+
+<footer class="table-footer">
+  <div class="row">
+      <div class="col-md-6 page-num-info">
+        <span>
+          Show 
+          <select data-ng-model="hhCtrl.numPerPage"
+          data-ng-options="num for num in hhCtrl.numPerPageOpt"
+          data-ng-change="hhCtrl.numPerPageChanged()">
+        </select> 
+        Entries per page
+      </span>
+    </div>
+
+    <div class="col-md-6 text-right pagination-container">
+      <dir-pagination-controls boundary-links="true" max-size="6" on-page-change="hhCtrl.pageChanged(newPageNumber)"></dir-pagination-controls>
+    </div> 
+  </div>
+</footer>
+
+</section>
+
+</div>

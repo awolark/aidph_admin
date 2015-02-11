@@ -168,8 +168,8 @@
 }]);
 
 
-aidphApp.controller('AreasCreateController', ['Area', 'Notify', 'logger',
-  function (Area, Notify, logger) {
+aidphApp.controller('AreasCreateController', ['Area', 'Notify', 'logger', 'ViewPresenterService',
+  function (Area, Notify, logger, ViewPresenterService) {
     var self = this;
     self.areaTypes = ['NATIONAL', 'REGION','PROVINCE', 'CITY', 'BRGY'];
     self.flash = '';
@@ -195,20 +195,21 @@ aidphApp.controller('AreasCreateController', ['Area', 'Notify', 'logger',
 
 
             }, function(errorResponse) {
-             console.log(errorResponse);
-             var errors = errorResponse.data.error.message;
-             var log = ['<h4>Failed to add area</h4> '];
-             angular.forEach(errors, function(value, key) {
-              this.push('* ' + value + '<br/>');                  
-            }, log);
-             logger.logError(log); 
+  
+               console.log(errorResponse);
+               
+               var errors = errorResponse.data.error.message;
+               
+               var formattedError = ViewPresenterService.formatArrayOfErrors(errors, 'Area');
+
+               logger.logError(formattedError); 
+
            });
         };
 
         self.alert = {
           type: 'danger'
         };
-
 
       }]);
 
